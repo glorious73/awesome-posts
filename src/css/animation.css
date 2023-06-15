@@ -1,0 +1,95 @@
+.fade-in {
+    animation: fadeIn ease 0.5s;
+    -webkit-animation: fadeIn ease 0.5s;
+}
+.fade-out {
+    animation: fadeOut linear 0.3s 1 normal forwards;
+    -webkit-animation: fadeOut linear 0.3s 1 normal forwards;
+}
+.sidebar-slide {
+    animation: sidebarSlide ease 0.4s;
+    -webkit-animation: sidebarSlide ease 0.4s;
+}
+
+@media screen and (max-width: 768px) {
+    /* same as width where there is no sidebar */
+    .navbar-slide {
+        animation: navbarSlide ease 0.4s;
+        -webkit-animation: navbarSlide ease 0.4s;
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-webkit-keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes fadeSpinner {
+    0%, 100% {
+     opacity: 1;
+    }
+   
+    60% {
+     opacity: 0;
+    }
+}
+@-webkit-keyframes fadeSpinner {
+    0%, 100% {
+     opacity: 1;
+    }
+   
+    60% {
+     opacity: 0;
+    }
+}
+
+@keyframes navbarSlide {
+    0% {
+        margin-top: -70px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+@-webkit-keyframes navbarSlide {
+    0% {
+        margin-top: -70px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+@keyframes sidebarSlide {
+    0% {
+        margin-left: -40%;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+@-webkit-keyframes sidebarSlide {
+    0% {
+        margin-left: -40%;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}

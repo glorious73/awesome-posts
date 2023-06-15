@@ -1,4 +1,4 @@
-import { Sidebar } from "./component/sidebar/sidebar";
+import { Sidebar } from "./component/UI/sidebar/sidebar";
 
 export class Components {
     constructor() { }

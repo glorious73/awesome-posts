@@ -1,6 +1,6 @@
 import { Components } from './components';
 import { router } from './Router/Router';
-import './css/style.css';
+import './styles';
 import 'construct-style-sheets-polyfill'; // may need to be in components.js
 
 document.querySelector('#app').innerHTML = `
@@ -23,7 +23,7 @@ async function loadApp(isLoggedIn) {
   window.GlobalVariables = { icons: ''};
   new Components().loadComponents();
   await loadIcons();
-  document.querySelector('body').insertAdjacentHTML('afterbegin', '<app-sidebar class="sidebar"></app-sidebar>');
+  document.querySelector('body').insertAdjacentHTML('afterbegin', '<app-sidebar class="sidebar sidebar-slide"></app-sidebar>');
   router.resolve();
 }
 
