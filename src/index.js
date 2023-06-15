@@ -1,6 +1,6 @@
 import { Components } from './components';
 import { router } from './Router/Router';
-import './styles';
+import './css/style.css';
 import 'construct-style-sheets-polyfill'; // may need to be in components.js
 
 document.querySelector('#app').innerHTML = `

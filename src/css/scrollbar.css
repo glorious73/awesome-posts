@@ -1,5 +1,5 @@
 :root {
-  scrollbar-color: var(--secondary-color) var(--accent-color);
+  scrollbar-color: var(--accent-color) var(--accent-color);
   scrollbar-gutter: auto;
   scrollbar-width: auto;
 }
@@ -16,7 +16,7 @@
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--greyed-out-color); 
+  background-color: var(--accent-color); 
   border-radius: 0.8rem;
 }
 
