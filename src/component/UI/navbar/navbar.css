@@ -1,0 +1,98 @@
+.nav {
+    display: none; /*only small screens*/
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-bottom: 0.5px solid var(--greyed-out-color);
+}
+
+.nav-btn {
+    display: none;
+}
+
+.nav > .nav-header {
+    display: inline;
+}
+
+.nav > .nav-header > .nav-title {
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 22px;
+    color: var(--text-color);
+    padding: 10px 10px 10px 10px;
+    cursor: pointer;
+}
+
+.navbar-brand-img {
+    display: none;
+    width: auto;
+    height: 60px;
+    /* Adjust to fit your logo */
+    margin-left: 1rem;
+    padding: 0.7rem;
+    background-repeat: no-repeat;
+}
+
+.nav-links {
+    padding-right: 2rem;
+}
+
+.nav-links > a {
+    display: inline-block;
+    padding: 1.2rem 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.nav-links > a:hover {
+    background-color: var(--active-color);
+    color: var(--primary-color);
+}
+
+.icon-navbar {
+    width: 2.2rem;
+    height: 2.2rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1px;
+    fill: currentColor;
+    vertical-align: bottom;
+}
+
+@media screen and (max-width: 768px) {
+    .nav {
+        display: flex;
+    }
+    .navbar-brand-img {
+        display: none; /* replaced by sidebar-img */
+    }
+    .nav-btn {
+        display: initial;
+        margin-left: 8vw;
+        border: none;
+        outline: none;
+        background-color: var(--primary-color);
+        color: var(--text-color);
+    }
+    .nav-btn:hover, .nav-btn:focus {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+    }
+
+    .nav-header {
+        display: none;
+    }
+
+    .nav-links {
+        background-color: var(--primary-color);
+        transition: all 0.3s ease-in;
+        padding-right: 1rem;
+    }
+}

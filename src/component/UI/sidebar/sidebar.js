@@ -8,24 +8,29 @@ function renderTemplate() {
             <section class="sidebar-header">
                 <img src="img/vite.svg" class="sidebar-img"/>
                 <a class="sidebar-header-icon">
-                    <svg>to be</svg>
+                    <svg class="icon-sidebar-header" viewBox="0 0 23 23">
+                    ${GlobalVariables.icons.querySelector(`#caret-left`).innerHTML}
+                    </svg>
                 </a>
             </section>
             <section class="sidebar-menu">
                 <a class="sidebar-item active" title="dashboard" data-route-name="dashboard">
-                    <svg class="icon icon-sidebar" viewBox="0 0 23 23">
+                    <svg class="icon-sidebar" viewBox="0 0 23 23">
                         ${GlobalVariables.icons.querySelector(`#chart-dots`).innerHTML}
                     </svg>
+                    <span>Dashboard</span>
                 </a>
                 <a class="sidebar-item" title="about" data-route-name="about">
-                    <svg class="icon icon-sidebar" viewBox="0 0 23 23">
+                    <svg class="icon-sidebar" viewBox="0 0 23 23">
                         ${GlobalVariables.icons.querySelector(`#info-octagon`).innerHTML}
                     </svg>
+                    <span>About</span>
                 </a>
                 <a class="sidebar-item" title="not found" data-route-name="qwerty">
-                    <svg class="icon icon-sidebar" viewBox="0 0 23 23">
+                    <svg class="icon-sidebar" viewBox="0 0 23 23">
                         ${GlobalVariables.icons.querySelector(`#question-mark`).innerHTML}
                     </svg>
+                    <span>Qwerty</span>
                 </a>
             </section>
         </div>
@@ -51,13 +56,16 @@ export class Sidebar extends HTMLElement {
     connectedCallback() {
         this.handleLocationChange = (e) => this.updateActiveItem(e);
         document.addEventListener("LocationChangedEvent", this.handleLocationChange);
+        this.shadowRoot.querySelectorAll(".sidebar-item").forEach(item => {
+            item.addEventListener('click', (e) => { 
+                this.navigate(e);
+                document.dispatchEvent(new CustomEvent("ResponsiveSidebarEvent"));
+            });
+        });
         const sidebarHeaderIcon = this.shadowRoot.querySelector(".sidebar-header-icon");
         sidebarHeaderIcon.addEventListener("click", (e) => {
             e.preventDefault();
-            this.toggleResponsiveSidebar(e);
-        });
-        this.shadowRoot.querySelectorAll(".sidebar-item").forEach(item => {
-            item.addEventListener('click', (e) => this.navigate(e));
+            document.dispatchEvent(new CustomEvent("ResponsiveSidebarEvent"));
         });
     }
 

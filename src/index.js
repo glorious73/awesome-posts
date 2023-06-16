@@ -3,19 +3,12 @@ import { router } from './Router/Router';
 import './styles';
 import 'construct-style-sheets-polyfill'; // may need to be in components.js
 
-document.querySelector('#app').innerHTML = `
-  <h1>Welcome to awesome dashboard!</h1>
-  <div class="card">
-    <a href="/" data-navigo>Home</a>
-    <a href="/about" data-navigo>About</a>
-  </div>
-`;
-
 async function loadApp(isLoggedIn) {
   window.GlobalVariables = { icons: ''};
   new Components().loadComponents();
   await loadIcons();
-  document.querySelector('.content').insertAdjacentHTML('afterbegin', '<app-sidebar class="sidebar sidebar-slide"></app-sidebar>');
+  loadContent();
+  loadEvents();
   router.resolve();
 }
 
@@ -24,6 +17,24 @@ async function loadIcons() {
   const icons = new DOMParser().parseFromString(iconsSvg, "image/svg+xml");
   icons.documentElement.style.display = "none";
   window.GlobalVariables.icons = icons.documentElement;
+}
+
+function loadContent() {
+  const content = `
+    <app-alerts></app-alerts>
+    <app-modal class="d-none"></app-modal>
+    <app-sidebar class="sidebar sidebar-slide"></app-sidebar>
+  `;
+  document.querySelector('.content').insertAdjacentHTML('afterbegin', content);
+  document.querySelector('#app').insertAdjacentHTML('afterbegin', `
+    <app-navbar class="navbar navbar-slide"></app-navbar>
+  `);
+}
+
+function loadEvents() {
+  document.addEventListener(
+    "ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show")
+  );
 }
 
 loadApp(false);
