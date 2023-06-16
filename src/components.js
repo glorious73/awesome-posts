@@ -1,4 +1,5 @@
 // App
+import { Dashboard } from "./component/dashboard/dashboard";
 import { About } from "./component/about/about";
 // UI
 import { Navbar } from "./component/UI/navbar/navbar";
@@ -12,6 +13,7 @@ export class Components {
 
     loadComponents() {
         // App
+        customElements.define('app-dashboard', Dashboard);
         customElements.define('app-about', About);
         // UI
         customElements.define('app-alerts', Alerts);

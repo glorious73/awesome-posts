@@ -2,7 +2,7 @@ export const Routes = [
     {
         name: 'dashboard',
         path: '/',
-        component: '<h1>Dashboard</h1>'
+        component: '<app-dashboard></app-dashboard>'
     },
     {
         name: 'about',
