@@ -11,24 +11,21 @@ router.hooks({
 router.on({
     '/': {
         as: 'dashboard',
-        uses: () => {
-            document.querySelector('#app').insertAdjacentHTML('beforeend', `
-            <h1>Home</h1>
-            <h2>Welcome</h2>
-            <div style="display: flex; column-gap: 1rem; min-height: 150%;">
-                <a href="/" data-navigo>Home</a>
-                <a href="/about?foo=bar&mewo=haw" data-navigo>About</a>
-            </div>`); 
-        }
+        uses: () => showComponent(`
+        <h1>Home</h1>
+        <h2>Welcome</h2>
+        <div style="display: flex; column-gap: 1rem; min-height: 150%;">
+            <a href="/" data-navigo>Home</a>
+            <a href="/about?foo=bar&mewo=haw" data-navigo>About</a>
+        </div>`)
     },
     '/about':{
         as: 'about',
-        uses: (match) => {
-            document.querySelector('#app').insertAdjacentHTML('beforeend', `<h1>About</h1><h2>This is about</h2><div class="card">
-            <a href="/" data-navigo>Home</a>
-            <a href="/about" data-navigo>About</a>
-            </div>`);
-        }
+        uses: (match) => showComponent(`
+        <h1>About</h1><h2>This is about</h2><div class="card">
+        <a href="/" data-navigo>Home</a>
+        <a href="/about" data-navigo>About</a>
+        </div>`)
     }
 });
 
@@ -37,6 +34,12 @@ router.notFound(() => {
             <a href="/" data-navigo>Home</a>
             </div>`;
 });
+
+function showComponent(componentHTML) {
+    const app = document.querySelector('#app');
+    app.innerHTML = '';
+    app.insertAdjacentHTML('beforeend', componentHTML); 
+}
 
 document.addEventListener('NavigateEvent', (e) => router.navigateByName(e.detail));
     
