@@ -1,7 +1,6 @@
 import { Components } from './components';
-import { router } from './Router/Router';
+import { app } from './app';
 import './styles';
-import 'construct-style-sheets-polyfill'; // may need to be in components.js
 
 async function loadApp(isLoggedIn) {
   window.GlobalVariables = { icons: ''};
@@ -9,7 +8,8 @@ async function loadApp(isLoggedIn) {
   await loadIcons();
   loadContent();
   loadEvents();
-  router.resolve();
+  app.loadRoutes();
+  app.router.resolve();
 }
 
 async function loadIcons() {
@@ -20,21 +20,19 @@ async function loadIcons() {
 }
 
 function loadContent() {
-  const content = `
+  const main = `
     <app-alerts></app-alerts>
     <app-modal class="d-none"></app-modal>
     <app-sidebar class="sidebar sidebar-slide"></app-sidebar>
   `;
-  document.querySelector('.content').insertAdjacentHTML('afterbegin', content);
-  document.querySelector('#app').insertAdjacentHTML('afterbegin', `
-    <app-navbar class="navbar navbar-slide"></app-navbar>
-  `);
+  const content = `<app-navbar class="navbar-slide"></app-navbar>`;
+  document.querySelector('#main').insertAdjacentHTML('afterbegin', main);
+  document.querySelector('#content').insertAdjacentHTML('afterbegin', content);
 }
 
 function loadEvents() {
-  document.addEventListener(
-    "ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show")
-  );
+  document.addEventListener('NavigateEvent', (e) => app.router.navigateByName(e.detail));
+  document.addEventListener("ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show"));
 }
 
 loadApp(false);
