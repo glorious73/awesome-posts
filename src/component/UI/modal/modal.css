@@ -1,0 +1,120 @@
+/* The Modal (background) */
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 99; /* Sit on top */
+    padding: 10vh 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+}
+/* Modal title*/
+.modal-title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--silver-color);
+}
+.modal-title {
+    font-weight: normal;
+}
+.modal-close {
+    color: var(--text-color);
+    font-size: 3rem;
+    font-weight: bold;
+    transition: 0.1s;
+    z-index: 10;
+    padding-right: 2rem;
+}
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--secondary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Modal Content */
+.modal-content {
+    position: relative;
+    margin: auto;
+    display: block;
+    width: 95%;
+    max-width: 85vw;
+    transform: translateY(-15rem);
+    transition: all 0.4s;
+    /* colors */
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+    border: 1px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+.modal-content.show {
+    transform: translateY(0);
+}
+/* Modal body */
+.modal-body {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    padding: 2rem;
+    overflow-y: auto;
+}
+.modal-body-img {
+    width: auto;
+    height: 65vh;
+    margin: auto;
+    overflow: hidden;
+}
+.modal-body-file {
+    width: 100%;
+    height: 65vh;
+    margin: auto;
+    overflow: hidden;
+}
+/* Caption */
+.modal-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 85vw;
+    text-align: center;
+    color: var(--greyed-out-color);
+    padding: 0; /* change if caption is used */
+}
+/* Zoom Animation */
+.modal-title-wrapper, 
+.modal-content, 
+#caption {
+    transition: all 0.5s;
+}
+
+.icon-modal {
+    width: 3rem;
+    height: 3rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 0.8px;
+    vertical-align: bottom;
+}
+
+@media screen and (max-width: 576px) {
+    .modal-title-wrapper {
+        flex-direction: column-reverse;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+    .modal-close {
+        width: 100%;
+        text-align: end;
+        padding-right: 0.5rem;
+    }
+    .modal-body-img {
+        width: 85vw;
+        height: auto;
+    }
+}
