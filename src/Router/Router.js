@@ -12,9 +12,12 @@ router.on({
     '/': {
         as: 'dashboard',
         uses: () => {
-            document.querySelector('#app').innerHTML = `<h1>Home</h1><h2>Welcome</h2><div class="card">
-            <a href="/" data-navigo>Home</a>
-            <a href="/about?foo=bar&mewo=haw" data-navigo>About</a>
+            document.querySelector('#app').innerHTML = `
+            <h1>Home</h1>
+            <h2>Welcome</h2>
+            <div style="display: flex; column-gap: 1rem; min-height: 150%;">
+                <a href="/" data-navigo>Home</a>
+                <a href="/about?foo=bar&mewo=haw" data-navigo>About</a>
             </div>`; 
         }
     },

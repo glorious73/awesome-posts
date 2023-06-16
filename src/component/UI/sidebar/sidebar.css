@@ -1,9 +1,3 @@
-.sidebar {
-    padding: 0;
-    min-height: 99.9vh;
-    max-height: 99.9vh;
-}
-
 .sidebar-scroll {
     background-color: var(--primary-color);
     color: var(--text-color);

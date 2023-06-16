@@ -11,20 +11,19 @@ document.querySelector('#app').innerHTML = `
   </div>
 `;
 
+async function loadApp(isLoggedIn) {
+  window.GlobalVariables = { icons: ''};
+  new Components().loadComponents();
+  await loadIcons();
+  document.querySelector('.content').insertAdjacentHTML('afterbegin', '<app-sidebar class="sidebar sidebar-slide"></app-sidebar>');
+  router.resolve();
+}
 
 async function loadIcons() {
   const iconsSvg = await (await fetch("icons/tabler-icons.svg")).text();
   const icons = new DOMParser().parseFromString(iconsSvg, "image/svg+xml");
   icons.documentElement.style.display = "none";
   window.GlobalVariables.icons = icons.documentElement;
-}
-
-async function loadApp(isLoggedIn) {
-  window.GlobalVariables = { icons: ''};
-  new Components().loadComponents();
-  await loadIcons();
-  document.querySelector('body').insertAdjacentHTML('afterbegin', '<app-sidebar class="sidebar sidebar-slide"></app-sidebar>');
-  router.resolve();
 }
 
 loadApp(false);
