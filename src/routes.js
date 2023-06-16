@@ -7,6 +7,6 @@ export const Routes = [
     {
         name: 'about',
         path: '/about',
-        component: '<h1>About</h1>'
+        component: '<app-about></app-about>'
     }
 ];
