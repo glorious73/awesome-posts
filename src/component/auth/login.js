@@ -1,7 +1,6 @@
 import styles from './auth.css?raw';
 import form from '../../css/form.css?raw';
 import input from '../../css/input.css?raw';
-import button from '../../css/button.css?raw';
 
 import authService from '../../service/AuthService';
 import uiService from '../../service/UIService';
@@ -26,16 +25,13 @@ function renderTemplate() {
                   </svg>
                 </div>
             </div>
-            <div class="form-row form-row-two-fields form-row-login">
+            <div class="form-row-two-fields" style="padding-top: 1rem;">
                 <a class="form-row-field auth-link" id="btnGuest">Forgot Password?</a>
-                <button type="submit" class="form-row-field btn-form btn-form-border btn-submit" id="btnSubmit">
-                    LOGIN  
-                </button>
+                <button type="submit" style="display: none;"></button>
+                <app-button class="form-row-field w-100" data-text="LOGIN" data-classes="btn btn-secondary w-100" id="btnSubmit">
+                </app-button>
             </div>
         </form>
-        <div class="mt-2 d-flex flex-row justify-content-center">
-            
-        </div>
     `;
   return template;
 }
@@ -48,32 +44,24 @@ export class Login extends HTMLElement {
       const template = renderTemplate();
       shadow.appendChild(template.content.cloneNode(true));
 
-      const stylesheet  = new CSSStyleSheet();
-      const formsheet   = new CSSStyleSheet();
-      const inputsheet  = new CSSStyleSheet();
-      const buttonsheet = new CSSStyleSheet();
+      const stylesheet = new CSSStyleSheet();
+      const formsheet  = new CSSStyleSheet();
+      const inputsheet = new CSSStyleSheet();
       stylesheet.replace(styles);
       formsheet.replace(form);
       inputsheet.replace(input);
-      buttonsheet.replace(button);
-      shadow.adoptedStyleSheets = [stylesheet, formsheet, inputsheet, buttonsheet];
+      shadow.adoptedStyleSheets = [stylesheet, formsheet, inputsheet];
   }
 
   connectedCallback() {
     const sroot = this.shadowRoot;
     sroot.querySelector("#passwordToggle").addEventListener("click", (e) => this.togglePassword(e));
-    sroot.querySelector("#loginForm").addEventListener("submit", async (e) => {
+    const form = sroot.querySelector("#loginForm");
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const btnSubmit = this.shadowRoot.querySelector("#btnSubmit");
-        const btnText = btnSubmit.innerHTML;
-        try {
-          uiService.toggleButton(btnSubmit, btnText, false);
-          await this.login(e);
-        } 
-        finally {
-          uiService.toggleButton(btnSubmit, btnText, true);
-        }
+        await this.login(e);
     });
+    sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => await this.login(new FormData(form)));
   }
 
   disconnectedCallback() {
@@ -81,12 +69,17 @@ export class Login extends HTMLElement {
   }
 
   async login(e) {
+    const button = this.shadowRoot.querySelector("#btnSubmit");
     try {
+      button.setAttribute("data-is-loading", true);
       const user = await authService.login(e.target);
       this.postLogin(user);
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);
+    }
+    finally {
+      button.setAttribute("data-is-loading", false);
     }
   }
 

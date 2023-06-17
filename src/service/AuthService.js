@@ -26,7 +26,9 @@ class AuthService {
             headers,
             jsonFormData
         );
-        return response.record;
+        if(response.record)
+            return (response.record);
+        throw new Error("Username or Password is incorrect.");
     }
 
     logout() {
