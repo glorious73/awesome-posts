@@ -4,13 +4,16 @@ import './styles';
 import '@fontsource/oxygen';
 
 async function loadApp(isLoggedIn) {
-  window.Globals = { icons: ''};
+  window.Globals = { API_URL: 'http://localhost:8090', icons: ''};
   new Components().loadComponents();
   await loadIcons();
   loadContent();
   loadEvents();
   app.loadRoutes();
-  app.router.resolve();
+  if(isLoggedIn)
+    app.router.resolve();
+  else
+    app.router.navigateByName("login");
 }
 
 async function loadIcons() {
@@ -32,6 +35,12 @@ function loadContent() {
 }
 
 function loadEvents() {
+  document.addEventListener('UserUIEvent', (e) => {
+    const navbar      = document.querySelector("app-navbar");
+    const sidebar     = document.querySelector("app-sidebar");
+    navbar.className  = (e.detail.isDisplayed) ? "navbar-slide" : "d-none";
+    sidebar.className = (e.detail.isDisplayed) ? "sidebar sidebar-slide" : "sidebar d-none";
+  });
   document.addEventListener('NavigateEvent', (e) => {
     if(e.detail.type === "name")
       app.router.navigateByName(e.detail.name);
@@ -41,4 +50,4 @@ function loadEvents() {
   document.addEventListener("ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show"));
 }
 
-loadApp(false);
+loadApp(localStorage.getItem("user"));
