@@ -5,10 +5,12 @@
 }
 
 :root {
+  /*https://coolors.co/palette/000000-14213d-fca311-e5e5e5-ffffff*/
   --primary-color: #ffffff;
-  --secondary-color: #009225;
-  --accent-color: #f0f1f3;
-  --text-color: #213547;
+  --secondary-color: #14213d;
+  --active-color: #fca311;
+  --accent-color: #e5e5e5;
+  --text-color: #000000;
   --success-color: #077d0b;
   --error-color: #ff4d00;
 
