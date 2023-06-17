@@ -41,6 +41,8 @@ function loadEvents() {
     navbar.className  = (e.detail.isDisplayed) ? "navbar-slide" : "d-none";
     sidebar.className = (e.detail.isDisplayed) ? "sidebar sidebar-slide" : "sidebar d-none";
   });
+  document.addEventListener("UnauthorizedEvent", () => app.router.navigateByName("login")); // TODO: UX
+  document.addEventListener("ForbiddenEvent", () => app.router.navigateByName("login")); // TODO: UX
   document.addEventListener('NavigateEvent', (e) => {
     if(e.detail.type === "name")
       app.router.navigateByName(e.detail.name);

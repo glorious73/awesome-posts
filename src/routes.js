@@ -13,5 +13,10 @@ export const Routes = [
         name: 'about',
         path: '/about',
         component: '<app-about></app-about>'
+    },
+    {
+        name: 'settings',
+        path: '/settings',
+        component: '<app-settings></app-settings>'
     }
 ];

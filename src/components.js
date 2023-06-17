@@ -3,6 +3,7 @@ import { Auth } from "./component/auth/auth";
 import { Login } from "./component/auth/login";
 import { Dashboard } from "./component/dashboard/dashboard";
 import { About } from "./component/about/about";
+import { Settings } from "./component/settings/settings";
 // UI
 import { Navbar } from "./component/UI/navbar/navbar";
 import { Sidebar } from "./component/UI/sidebar/sidebar";
@@ -24,6 +25,7 @@ export class Components {
         customElements.define('app-login', Login);
         customElements.define('app-dashboard', Dashboard);
         customElements.define('app-about', About);
+        customElements.define('app-settings', Settings);
         // UI
         customElements.define('app-alerts', Alerts);
         customElements.define('app-alert', Alert);
