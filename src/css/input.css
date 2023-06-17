@@ -4,7 +4,7 @@
     background-color: transparent;
     border: 1px solid var(--accent-color);
     width: 100%;
-    padding: 0.4rem 0.6rem;
+    padding: 0.4rem 0;
     margin: 0.6rem 0;
     -webkit-appearance: none;
     outline: none;
@@ -58,7 +58,7 @@ div.input-password-hide-show {
 }
 div.input-password-hide-show svg {
     position: absolute;
-    right: 1%;
+    right: 5%;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;

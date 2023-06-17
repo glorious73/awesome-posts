@@ -28,7 +28,7 @@
 }
 
 .toaster-border {
-    border: var(--greyed-out-color) 2px solid;
+    border: var(--accent-color) 2px solid;
 }
 .toaster-wrapper {
     display: flex;
