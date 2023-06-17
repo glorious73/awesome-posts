@@ -1,6 +1,7 @@
 import { Components } from './components';
 import { app } from './app';
 import './styles';
+import '@fontsource/oxygen';
 
 async function loadApp(isLoggedIn) {
   window.Globals = { icons: ''};
