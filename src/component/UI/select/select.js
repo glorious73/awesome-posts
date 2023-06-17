@@ -6,7 +6,7 @@ function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
-    <input type="text" class="input-text-select" id="selectedItem" placeholder="loading..." readonly/>
+    <input type="text" class="input-select" id="selectedItem" placeholder="loading..." readonly/>
     <div class="dropdown select-dropdown" tabindex="0">  
         <div class="dropdown-content" id="selectItems">
         </div>
