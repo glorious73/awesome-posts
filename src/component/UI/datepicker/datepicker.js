@@ -2,15 +2,15 @@ import styles from './datepicker.css?raw';
 
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
-import 'air-datepicker/air-datepicker.css';
+import date from 'air-datepicker/air-datepicker.css?raw';
 
 function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
     <div class="input-date-range">
-        <input type="text" id="dateBegin" class="input-text-date" placeholder="> Date">
-        <input type="text" id="dateEnd" class="input-text-date" placeholder="< Date">
+        <input type="text" id="dateBegin" class="input-date" placeholder="> Date">
+        <input type="text" id="dateEnd" class="input-date" placeholder="< Date">
     </div>
   `;
   return template;
@@ -25,8 +25,10 @@ export class DatePicker extends HTMLElement {
       shadow.appendChild(template.content.cloneNode(true));
 
       const stylesheet = new CSSStyleSheet();
+      const datesheet  = new CSSStyleSheet();
       stylesheet.replace(styles);
-      shadow.adoptedStyleSheets = [stylesheet];
+      datesheet.replace(date);
+      shadow.adoptedStyleSheets = [stylesheet, datesheet];
   }
 
   static get observedAttributes() {

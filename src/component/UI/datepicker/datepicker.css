@@ -1,4 +1,4 @@
-.input-text-date {
+.input-date {
     font-weight: 500;
     background-color: var(--primary-color);
     border: 1px solid var(--secondary-color);
@@ -9,7 +9,7 @@
     outline: none;
 }
 
-.input-text-date, input[type="date"] {
+.input-date, input[type="date"] {
     background: var(--primary-color) url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-0.5 -0.5 16.8 16.8'%3E%3Cpath fill='black' stroke='black' d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z'/%3E%3Cpath fill='black' stroke='black' d='M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z'/%3E%3C/svg%3E") no-repeat 95% center;
     background-size: 14px 14px;
 }
@@ -23,4 +23,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
     margin-right: 5%;
     z-index: 1;
+}
+
+/* override classes */
+.air-datepicker-body--day-name {
+    color: var(--secondary-color) !important;
+}
+.air-datepicker-cell.-selected-, .air-datepicker-cell.-selected-.-current- {
+    color: var(--primary-color) !important;
+    background: var(--secondary-color) !important;
 }
