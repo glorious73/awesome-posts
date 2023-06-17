@@ -19,11 +19,10 @@ class UIService {
         );
     }
 
-    UIForUserEvent(isDisplayed) {
-        document.dispatchEvent(new CustomEvent("UIForUserEvent", {
-            detail: isDisplayed,
-            })
-        );
+    toggleUserUI(isDisplayed) {
+        document.dispatchEvent(new CustomEvent("UserUIEvent", {
+            detail: { isDisplayed: isDisplayed }
+        }));
     }
 
     toggleButton(btn, btnText, isEnabled) {
