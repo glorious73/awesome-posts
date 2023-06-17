@@ -33,7 +33,7 @@ function renderTemplate() {
                     <span>Qwerty</span>
                 </a>
                 <div class="sidebar-separator"></div>
-                <a class="sidebar-item" style="padding-bottom: 0;" title="Settings" data-route-name="settings">
+                <a class="sidebar-item" title="Settings" data-route-name="settings">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#gear`).innerHTML}
                     </svg>
