@@ -1,0 +1,188 @@
+/*-- TextInput --*/
+.input-text {
+    font-weight: 500;
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    margin: 0.6rem 0;
+    -webkit-appearance: none;
+    outline: none;
+}
+.input-text:focus {
+    border: 1px solid var(--secondary-color);
+}
+
+.input-text-form-flex {
+    font-weight: normal;
+    background-color: var(--primary-color);
+    border: 1px solid var(--silver-color);
+    height: 2rem;
+    text-indent: 1rem;
+    outline: none;
+    -webkit-appearance: none;
+}
+input[type="date"].input-text-form-flex {
+    text-indent: 0.5rem;
+}
+textarea.input-text-form-flex {
+    width: auto;
+    height: 5rem;
+    text-indent: 0;
+}
+.input-text-form-flex:focus {
+    border: 1.5px solid var(--active-color);
+}
+.input-text:disabled,
+.input-text-form-flex:disabled {
+    color: var(--grey-color);
+    cursor: auto;
+}
+
+.input-text-label { 
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+    -webkit-appearance: none;
+    outline: none;
+}
+.input-text-label:disabled {
+    color: var(--grey-color);
+    cursor: auto;
+}
+/*-- /TextInput --*/
+
+/*-- PasswordInput --*/
+div.input-password-hide-show {
+    position: relative;
+}
+div.input-password-hide-show svg {
+    position: absolute;
+    right: 1%;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+/*-- /PasswordInput --*/
+
+/*-- CheckboxInput -- */
+.checkbox-container {
+    padding: 0 0.5rem;
+}
+input[type="checkbox"] {
+    opacity: 0;
+    width: 1rem;
+}
+
+input[type="checkbox"] + label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    color: var(--text-color);
+    line-height: 25px;
+}
+
+input[type="checkbox"] + label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 1.1rem;
+    height: 1.1rem;
+    outline: 1px solid var(--text-color);
+    background: var(--primary-color);
+}
+
+input[type="checkbox"]:checked + label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 1.1rem;
+    height: 1.1rem;
+    outline: 1px solid var(--text-color);
+    background: var(--primary-color);
+}
+
+input[type="checkbox"]:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-image: url("../icons/bootstrap-icons.svg#check2");
+    color: var(--text-color);
+    fill: var(--text-color);
+    background-size: contain;
+}
+/*-- /CheckboxInput --*/
+
+/*-- Range --*/
+.input-range-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0;
+}
+.input-range {
+    -webkit-appearance:none !important;
+    height: 1rem;
+    background: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    outline: none;
+}
+.input-range-border {
+    border-radius: 0.8rem;
+}
+.input-range::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: -10px;
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.input-range::-webkit-slider-thumb:hover {
+    background: var(--active-color);
+    border: 1px solid var(--active-color);
+}
+.input-range-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+.input-range-list option {
+    padding: 0;
+}
+/*-- /Range --*/
+
+/*-- Meter --*/
+.input-meter {
+    margin: 0.6rem 0;
+    width: 100%;
+    height: 2.7rem;
+    border: none;
+}
+.input-meter::-webkit-meter-optimum-value {
+    background: var(--secondary-color);
+}
+.input-meter::-moz-meter-bar { /* Firefox Pseudo Class */
+    background: var(--secondary-color);
+}
+.input-meter::after {
+    content : attr(value);
+    color: var(--accent-color);
+    position: relative;
+    top: -78%;
+    left: 0.6rem;
+    font-size: 1rem;
+}
+.input-meter-border {
+    border-radius: 0.8rem;
+}
+/*-- /Meter --*/
