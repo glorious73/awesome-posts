@@ -7,7 +7,7 @@ function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
-    <div class="auth fade-in">
+    <div class="auth">
         <div class="auth-logos">
             <img src="img/undraw_data.svg" class="img-auth-image" alt="dashboard illustration" />
             <img src="img/vite.svg" class="img-auth-logo" alt="Vite logo"/>
