@@ -3,7 +3,7 @@ import { app } from './app';
 import './styles';
 
 async function loadApp(isLoggedIn) {
-  window.GlobalVariables = { icons: ''};
+  window.Globals = { icons: ''};
   new Components().loadComponents();
   await loadIcons();
   loadContent();
@@ -13,10 +13,10 @@ async function loadApp(isLoggedIn) {
 }
 
 async function loadIcons() {
-  const iconsSvg = await (await fetch("icons/tabler-icons.svg")).text();
+  const iconsSvg = await (await fetch("icons/bootstrap-icons.svg")).text();
   const icons = new DOMParser().parseFromString(iconsSvg, "image/svg+xml");
   icons.documentElement.style.display = "none";
-  window.GlobalVariables.icons = icons.documentElement;
+  window.Globals.icons = icons.documentElement;
 }
 
 function loadContent() {
@@ -31,7 +31,12 @@ function loadContent() {
 }
 
 function loadEvents() {
-  document.addEventListener('NavigateEvent', (e) => app.router.navigateByName(e.detail));
+  document.addEventListener('NavigateEvent', (e) => {
+    if(e.detail.type === "name")
+      app.router.navigateByName(e.detail.name);
+    else
+      app.router.navigate(e.detail.route);
+  });
   document.addEventListener("ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show"));
 }
 
