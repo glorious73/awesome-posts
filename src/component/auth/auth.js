@@ -9,7 +9,7 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
     <div class="auth">
         <div class="auth-logos">
-            <img src="img/undraw_data.svg" class="img-auth-image" alt="dashboard illustration" />
+            <img src="img/undraw_posts.svg" class="img-auth-image" alt="dashboard illustration" />
             <img src="img/vite.svg" class="img-auth-logo" alt="Vite logo"/>
         </div>
         <div class="auth-form">
