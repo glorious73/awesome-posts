@@ -92,13 +92,14 @@
     vertical-align: bottom;
 }
 .icon-sidebar {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0.5rem 0;
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 0.8px;
-    fill: var(--primary-color);
+    fill: none;
     vertical-align: bottom;
 }
 .icon-sidebar-arrow {

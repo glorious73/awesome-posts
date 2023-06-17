@@ -6,7 +6,7 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
         <div id="toaster" class="toaster-border">
             <div class="toaster-wrapper">
-                <svg viewBox="0 0 23 23"></svg>
+                <svg viewBox="-0.5 -0.5 16.9 16.9"></svg>
                 <div>
                     <div class="toaster-status w-100">
                         <label class="" id="status"></label>
@@ -70,18 +70,18 @@ export class Alert extends HTMLElement {
       let stroke = "";
       switch (status) {
         case "Success":
-          icon = "circle-check";
+          icon = "check2-circle";
           stroke = "stroke-success";
           break;
         case "Error":
-          icon = "circle-x";
+          icon = "x-circle";
           stroke = "stroke-error";
           break;
         default:
           icon = "exclamation-circle";
           stroke = "stroke-info";
       }
-      svgIcon.innerHTML = `${GlobalVariables.icons.querySelector(`#${icon}`).innerHTML}`;
+      svgIcon.innerHTML = `${Globals.icons.querySelector(`#${icon}`).innerHTML}`;
       svgIcon.classList.add(`icon-alert`);
       svgIcon.classList.add(stroke);
   }

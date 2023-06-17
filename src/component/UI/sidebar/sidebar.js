@@ -8,27 +8,27 @@ function renderTemplate() {
             <section class="sidebar-header">
                 <img src="img/vite.svg" class="sidebar-img"/>
                 <a class="sidebar-header-icon">
-                    <svg class="icon-sidebar-header" viewBox="0 0 23 23">
-                    ${GlobalVariables.icons.querySelector(`#caret-left`).innerHTML}
+                    <svg class="icon-sidebar-header" viewBox="-0.5 -0.5 16.9 16.9">
+                    ${Globals.icons.querySelector(`#caret-left`).innerHTML}
                     </svg>
                 </a>
             </section>
             <section class="sidebar-menu">
-                <a class="sidebar-item active" title="dashboard" data-route-name="dashboard">
-                    <svg class="icon-sidebar" viewBox="0 0 23 23">
-                        ${GlobalVariables.icons.querySelector(`#chart-dots`).innerHTML}
+                <a class="sidebar-item active" title="Dashboard" data-route-name="dashboard">
+                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#bar-chart-line-fill`).innerHTML}
                     </svg>
                     <span>Dashboard</span>
                 </a>
-                <a class="sidebar-item" title="about" data-route-name="about">
-                    <svg class="icon-sidebar" viewBox="0 0 23 23">
-                        ${GlobalVariables.icons.querySelector(`#info-octagon`).innerHTML}
+                <a class="sidebar-item" title="About" data-route-name="about">
+                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#info-square-fill`).innerHTML}
                     </svg>
                     <span>About</span>
                 </a>
-                <a class="sidebar-item" title="not found" data-route-name="qwerty">
-                    <svg class="icon-sidebar" viewBox="0 0 23 23">
-                        ${GlobalVariables.icons.querySelector(`#question-mark`).innerHTML}
+                <a class="sidebar-item" title="Not found" data-route-name="qwerty">
+                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#question-square-fill`).innerHTML}
                     </svg>
                     <span>Qwerty</span>
                 </a>
@@ -78,7 +78,7 @@ export class Sidebar extends HTMLElement {
         const routeName = (e.target.getAttribute('data-route-name') 
                         || e.target.parentNode.getAttribute('data-route-name'))
                         || e.target.parentNode.parentNode.getAttribute('data-route-name');
-        document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: routeName}));
+        document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: routeName }}));
     }
 
     updateActiveItem(e) {

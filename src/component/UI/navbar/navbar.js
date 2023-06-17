@@ -6,8 +6,8 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
     <nav class="nav">
             <a class="nav-btn">
-                <svg class="icon-navbar" viewBox="0 0 23 23">
-                    ${GlobalVariables.icons.querySelector(`#menu-2`).innerHTML}
+                <svg class="icon-navbar" viewBox="-0.5 -0.5 16.9 16.9">
+                    ${Globals.icons.querySelector(`#list`).innerHTML}
                 </svg>
             </a>
             <div class="nav-header">

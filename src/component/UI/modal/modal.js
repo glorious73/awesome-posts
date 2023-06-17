@@ -4,27 +4,24 @@ function renderTemplate() {
     const template = document.createElement("template");
 
     template.innerHTML = /*html*/ `
-            <style>
-            ${window.GlobalVariables.styles}
-            </style>
-            <div id="uiModal" class="modal">
-                <div class="modal-content card card-primary">
-                    <div class="modal-title-wrapper">
-                        <h1 class="modal-title"></h1>
-                        <span class="modal-close">
-                            <svg class="icon-modal" viewBox="0 0 23 23">
-                                ${GlobalVariables.icons.querySelector(`#x`).innerHTML}
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="modal-body">
+        <div id="uiModal" class="modal">
+            <div class="modal-content card card-primary">
+                <div class="modal-title-wrapper">
+                    <h1 class="modal-title"></h1>
+                    <span class="modal-close">
+                        <svg class="icon-modal" viewBox="-0.5 -0.5 16.9 16.9">
+                            ${Globals.icons.querySelector(`#x-lg`).innerHTML}
+                        </svg>
+                    </span>
+                </div>
+                <div class="modal-body">
 
-                    </div>
-                    <div class="modal-caption">
+                </div>
+                <div class="modal-caption">
 
-                    </div>
                 </div>
             </div>
+        </div>
     `;
     return template;
 }
