@@ -7,6 +7,11 @@ import { Sidebar } from "./component/UI/sidebar/sidebar";
 import { Modal } from "./component/UI/modal/modal";
 import { Alerts } from "./component/UI/alert/alerts";
 import { Alert } from "./component/UI/alert/alert";
+import { Select } from "./component/UI/select/select";
+import { DatePicker } from "./component/UI/datepicker/datepicker";
+import { Filter } from "./component/UI/filter/filter";
+import { Pagination } from "./component/UI/pagination/pagination";
+import { Table } from "./component/UI/table/table";
 
 export class Components {
     constructor() { }
@@ -21,5 +26,10 @@ export class Components {
         customElements.define('app-modal', Modal);
         customElements.define('app-navbar', Navbar);
         customElements.define('app-sidebar', Sidebar);
+        customElements.define('app-select', Select);
+        customElements.define('app-date-picker', DatePicker);
+        customElements.define('app-filter', Filter);
+        customElements.define('app-table', Table);
+        customElements.define('app-pagination', Pagination);
     }
 }
