@@ -6,9 +6,8 @@ function renderTemplate() {
     template.innerHTML = /*html*/ `
         <div style="padding: 2rem;">
             <h1>Settings</h1>
-            <button style="background-color: var(--secondary-color); color: #fff; padding: 0.5rem 1rem;">
-                Logout
-            </button>
+            <app-button data-text="Logout" data-classes="btn btn-secondary">
+            </app-button>
         </div>
     `;
     return template;
@@ -28,7 +27,7 @@ export class Settings extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector("button").addEventListener("click", (e) => this.logout());
+        this.shadowRoot.querySelector("app-button").addEventListener("click", (e) => this.logout());
     }
 
     disconnectedCallback() {
