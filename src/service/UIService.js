@@ -25,18 +25,6 @@ class UIService {
         }));
     }
 
-    toggleButton(btn, btnText, isEnabled) {
-        if (isEnabled) {
-            btn.removeAttribute("disabled");
-            btn.innerHTML = btnText;
-        } 
-        else {
-            btn.setAttribute("disabled", "");
-            btn.innerHTML =
-            '<span class="spinner button-spinner"><span></span><span></span><span></span></span>';
-        }
-    }
-
     dataBindElements(component, elements) {
         for (const element of elements.split(",")) {
             const elementSplit = element.split("&");
