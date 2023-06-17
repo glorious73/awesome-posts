@@ -1,0 +1,121 @@
+/* Dropdown */
+.dropdown {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.dropdown:hover {
+    background-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    width: 100%;
+    text-align: center;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+    position: absolute;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.dropdown-content.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.dropdown-content.show a {
+    width: 100%;
+    padding: 0.8rem 0;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--accent-color);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.dropdown-content.show a:hover, .dropdown-content.show a:focus {
+    background-color: var(--accent-color);
+}
+.dropdown-content.show a:hover {
+    cursor: pointer;
+}
+.dropdown-content.show a:focus {
+    cursor: auto;
+}
+
+/* Select */
+.select-dropdown {
+    position: relative;
+}
+.select-dropdown:hover {
+    background-color: var(--primary-color) !important;
+}
+.select-dropdown:focus {
+    outline: none;
+}
+
+.select-dropdown .dropdown-content {
+    max-height: 20rem;
+    overflow-y: auto;
+}
+
+/* Select element */
+.input-select {
+    /* style */
+    color: var(--text-color);
+    font-weight: normal;
+    background-color: transparent;
+    border: 1.5px solid var(--greyed-out-color);
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 0rem;
+    text-indent: 15px;
+    outline: none;
+    -webkit-appearance: none;
+    /* select icon */
+    background: var(--primary-color) url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-0.5 -0.5 16.8 16.8'%3E%3Cpath fill='black' stroke='black' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat 95% center;
+    background-size: 12px 12px;
+}
+.input-select:hover, 
+.input-select:focus,
+.select-dropdown:focus input {
+    border: 1.5px solid var(--active-color);
+    cursor: pointer;
+}
+
+.input-select-secondary {
+    border: 1px solid var(--secondary-color) !important;
+}
+.input-select-silver {
+    border: 1px solid var(--silver-color) !important;
+}
+
+.btn-select {
+    width: 100%;
+    padding: 0.5rem 0.05rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+}
+.btn-select:hover, .btn-select:focus {
+    outline: none;
+    cursor: pointer;
+    background-color: var(--accent-color);
+}
