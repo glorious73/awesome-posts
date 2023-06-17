@@ -10,6 +10,11 @@ export const Routes = [
         component: '<app-dashboard class="fade-in"></app-dashboard>'
     },
     {
+        name: 'posts',
+        path: '/posts',
+        component: '<app-posts class="fade-in"></app-posts>'
+    },
+    {
         name: 'about',
         path: '/about',
         component: '<app-about class="fade-in"></app-about>'

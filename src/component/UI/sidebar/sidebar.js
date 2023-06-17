@@ -20,17 +20,17 @@ function renderTemplate() {
                     </svg>
                     <span>Dashboard</span>
                 </a>
+                <a class="sidebar-item" title="Posts" data-route-name="posts">
+                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#chat-left-text`).innerHTML}
+                    </svg>
+                    <span>Posts</span>
+                </a>
                 <a class="sidebar-item" title="About" data-route-name="about">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#info-square-fill`).innerHTML}
                     </svg>
                     <span>About</span>
-                </a>
-                <a class="sidebar-item" title="Not found" data-route-name="qwerty">
-                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
-                        ${Globals.icons.querySelector(`#question-square-fill`).innerHTML}
-                    </svg>
-                    <span>Qwerty</span>
                 </a>
                 <div class="sidebar-separator"></div>
                 <a class="sidebar-item" title="Settings" data-route-name="settings">

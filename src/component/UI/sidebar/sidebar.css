@@ -45,7 +45,7 @@
 
 .sidebar-item {
     background-color: var(--primary-color);
-    color: var(--text-color);
+    color: var(--secondary-color);
     display: flex;
     flex-direction: row;
     place-content: center center;
@@ -62,8 +62,8 @@
 }
 .sidebar-item:hover, 
 .sidebar-item.active:hover,
-.sidebar-item.active:hover .sidebar-icon {
-    background-color: #eee;
+.sidebar-item.active:hover .icon-sidebar {
+    background-color: var(--accent-color);
     color: var(--secondary-color);
     cursor: pointer;
 }
@@ -71,6 +71,7 @@
     display: none;
 }
 .sidebar-item.active .icon-sidebar {
+    stroke: var(--secondary-color);
     color: var(--secondary-color);
 }
 
@@ -95,7 +96,7 @@
     width: 3.5rem;
     height: 3.5rem;
     padding: 0.5rem 0;
-    stroke: currentColor;
+    stroke: var(--secondary-color);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 0.8px;

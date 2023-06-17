@@ -2,6 +2,7 @@
 import { Auth } from "./component/auth/auth";
 import { Login } from "./component/auth/login";
 import { Dashboard } from "./component/dashboard/dashboard";
+import { Posts } from "./component/posts/posts";
 import { About } from "./component/about/about";
 import { Settings } from "./component/settings/settings";
 // UI
@@ -25,6 +26,7 @@ export class Components {
         customElements.define('app-auth', Auth);
         customElements.define('app-login', Login);
         customElements.define('app-dashboard', Dashboard);
+        customElements.define('app-posts', Posts);
         customElements.define('app-about', About);
         customElements.define('app-settings', Settings);
         // UI
