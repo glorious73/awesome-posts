@@ -36,11 +36,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* override classes */
 .air-datepicker-body--day-name {
-    color: var(--secondary-color) !important;
+    color: var(--active-color) !important;
 }
 .air-datepicker-cell.-selected-, .air-datepicker-cell.-selected-.-current- {
     color: var(--primary-color) !important;
-    background: var(--active-color) !important;
+    background: var(--secondary-color) !important;
 }
 
 @media screen and (max-width: 768px) {

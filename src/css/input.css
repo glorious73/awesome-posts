@@ -3,9 +3,11 @@
     font-weight: 500;
     background-color: transparent;
     border: 1px solid var(--accent-color);
+    border-radius: 0.8rem;
     width: 100%;
     padding: 0.4rem 0;
     margin: 0.6rem 0;
+    text-indent: 0.6rem;
     -webkit-appearance: none;
     outline: none;
 }
@@ -17,6 +19,7 @@
     font-weight: normal;
     background-color: var(--primary-color);
     border: 1px solid var(--silver-color);
+    border-radius: 0.8rem;
     height: 2rem;
     text-indent: 1rem;
     outline: none;
@@ -129,10 +132,8 @@ input[type="checkbox"]:checked + label::after {
     height: 1rem;
     background: var(--primary-color);
     border: 1px solid var(--secondary-color);
-    outline: none;
-}
-.input-range-border {
     border-radius: 0.8rem;
+    outline: none;
 }
 .input-range::-webkit-slider-thumb {
     -webkit-appearance: none !important;

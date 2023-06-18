@@ -90,7 +90,7 @@ export class DatePicker extends HTMLElement {
           if(element.value != element.lastValue)
             document.dispatchEvent(
                 new CustomEvent(this.searchEvent, {
-                    detail: { data: { id: id, value: element.value } }
+                    detail: {  id: id, value: element.value }
                 })
             );
           element.lastValue = element.value;
