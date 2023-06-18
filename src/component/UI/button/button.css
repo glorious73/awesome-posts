@@ -40,46 +40,22 @@
     cursor: pointer;
 }
 
-.btn-action {
-    padding: 0.45rem 1.5rem 0.45rem 1rem;
+.btn-filter {
+    display: flex;
+    column-gap: 0.2rem;
+    place-content: flex-start center;
+    place-items: center center;
+    width: 8rem;
+    height: 3rem;
     border-radius: 0.8rem;
     font-size: 1.3rem;
 }
-.btn-action:hover {
+.btn-filter:hover {
     cursor: pointer;
 }
-.btn-action.disabled, .btn-action.disabled:hover {
+.btn-filter.disabled, .btn-filter.disabled:hover {
     opacity: 0.6 !important;
     cursor: progress !important;
-}
-.btn-action-primary {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-}
-.btn-action-primary.active, .btn-action-primary:hover {
-    background-color: var(--active-color);
-    border: 1px solid var(--active-color);
-    color: var(--primary-color);
-}
-
-.icon-action {
-    width: 1.6rem;
-    height: 1.6rem;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 0.9px;
-    fill: none;
-    vertical-align: -0.15rem;
-}
-
-.icon-action-fill {
-    fill: currentColor !important;
-    stroke-width: 0.6px !important;
-}
-.icon-action-fill:hover {
-    fill: currentColor !important;
 }
 
 .w-100 {
@@ -132,5 +108,14 @@
    
     60% {
      opacity: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .btn-filter {
+        place-content: flex-start center;
+        place-items: center stretch;
+        width: 13rem;
+        height: 2.6rem;
     }
 }

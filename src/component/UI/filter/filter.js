@@ -14,18 +14,22 @@ function renderTemplate() {
                 <app-date-picker class="d-none"></app-date-picker>
             </div>
             <div class="filter-item filter-actions">
-                <a class="btn-action btn-action-primary" id="export">
-                    <svg class="icon-action icon-action-fill" viewBox="-0.5 -0.5 16.9 16.9">
+                <app-button data-classes="btn btn-primary btn-filter" id="export">
+                  <span slot="text">
+                    <svg class="icon-filter icon-filter-fill" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#file-spreadsheet-fill`).innerHTML}
                     </svg>
                     Export
-                </a>
-                <a class="btn-action btn-action-secondary" id="add">
-                    <svg class="icon-action" viewBox="-0.5 -0.5 16.9 16.9">
+                  </span>
+                </app-button>
+                <app-button data-classes="btn btn-secondary btn-filter" id="add">
+                  <span slot="text">
+                    <svg class="icon-filter" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#plus-circle`).innerHTML}
                     </svg>
                     <span id="addText">Add</span>
-                </a>
+                  </span>
+                </app-button>
             </div>
         </div>
   `;
@@ -47,43 +51,11 @@ export class Filter extends HTMLElement {
 
   connectedCallback() {
     const sroot = this.shadowRoot;
-    // search
-    this.search = "";
-    const inputSearch = sroot.querySelector("#search");
-    inputSearch.id    = this.getAttribute("data-search-id") || "search";
-    inputSearch.setAttribute("placeholder", this.getAttribute("data-search-placeholder"));
-    inputSearch.addEventListener("focusout", (e) =>  {
-      if(this.search != e.target.value) {
-        this.filter(e);
-        this.search = e.target.value;
-      }
-    });
-    inputSearch.addEventListener("keypress", (e) => {
-      if (e.keyCode == 13) this.filter(e);
-    });
-    // dropdown
-    const dropdown = sroot.querySelector("#dropdown");
-    // add
-    const btnAdd = sroot.querySelector("#add");
-    const isAdd  = this.getAttribute("data-is-add") == "true";
-    btnAdd.classList.add(isAdd ? "" : "d-none");
-    btnAdd.setAttribute("href", isAdd ? this.getAttribute("data-add-href") : "");
-    // export
-    const btnExport = sroot.querySelector("#export");
-    btnExport.addEventListener("click", async (e) => {
-      e.preventDefault();
-      btnExport.classList.add("disabled");
-      await this.export();
-      btnExport.classList.remove("disabled");
-    });
-    // date
-    const isDates = this.getAttribute("data-is-dates");
-    if(isDates && isDates == "true") {
-      const inputDates = sroot.querySelector("app-date-picker");
-      inputDates.classList.remove("d-none");
-      inputDates.setAttribute("data-begin-id", this.getAttribute("data-begin-id") || "dateBegin");
-      inputDates.setAttribute("data-end-id", this.getAttribute("data-end-id") || "dateEnd");
-    }
+    this.loadSearch(sroot.querySelector("#search"))
+    this.loadDropdown(sroot.querySelector("#dropdown"));
+    this.loadAdd(sroot.querySelector("#add"));
+    this.loadExport(sroot.querySelector("#export"));
+    this.loadDates(sroot.querySelector("app-date-picker"));
   }
 
   disconnectedCallback() {
@@ -97,6 +69,50 @@ export class Filter extends HTMLElement {
       this.shadowRoot.querySelector("#dropdown").className = newValue;
   }
 
+  loadSearch(search) {
+    this.search = "";
+    search.id   = this.getAttribute("data-search-id") || "search";
+    search.setAttribute("placeholder", this.getAttribute("data-search-placeholder"));
+    search.addEventListener("focusout", (e) =>  {
+      if(this.search != e.target.value) {
+        this.filter(e);
+        this.search = e.target.value;
+      }
+    });
+    search.addEventListener("keypress", (e) => {
+      if (e.keyCode == 13 && (this.search != e.target.value)) this.filter(e);
+    });
+  }
+
+  loadDropdown(dropdown) {
+    
+  }
+
+  loadDates(dates) {
+    const isDates = this.getAttribute("data-is-dates");
+    if(isDates && isDates == "true") {
+      dates.setAttribute("data-begin-id", this.getAttribute("data-begin-id") || "dateBegin");
+      dates.setAttribute("data-end-id", this.getAttribute("data-end-id") || "dateEnd");
+    }
+  }
+
+  loadAdd(button) {
+    const isAdd  = this.getAttribute("data-is-add") == "true";
+    button.classList.add(isAdd ? "NA" : "d-none");
+    if(isAdd)
+      button.addEventListener("click", (e) => 
+        document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: 'route', route: this.getAttribute("data-add-path")}})));
+  }
+
+  loadExport(button) {
+    button.addEventListener("click", async (e) => {
+      e.preventDefault();
+      button.setAttribute("data-is-loading", true);
+      await this.export(); // TODO: export event
+      button.setAttribute("data-is-loading", true);
+    });
+  }
+
   filter(e) {
     document.dispatchEvent(
       new CustomEvent("searchEvent", {
@@ -108,8 +124,8 @@ export class Filter extends HTMLElement {
   updateAttributes(attributes) {
     const sroot  = this.shadowRoot;
     const filter = JSON.parse(attributes);
-    sroot.querySelector(".input-text-search").value = filter.search || "";
     this.search = filter.search || "";
+    sroot.querySelector(".input-search").value = filter.search || "";
     sroot.querySelector("app-select").setAttribute("data-value", filter.select);
     sroot.querySelector("app-date-picker").setAttribute("data-begin-value", filter.dateBegin);
     sroot.querySelector("app-date-picker").setAttribute("data-end-value", filter.dateEnd);

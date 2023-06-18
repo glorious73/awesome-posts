@@ -78,15 +78,15 @@
 
 /* Select element */
 .input-select {
-    /* style */
-    color: var(--text-color);
-    font-weight: normal;
     background-color: transparent;
-    border: 1.5px solid var(--greyed-out-color);
+    color: var(--text-color);
+    border: 1.5px solid var(--secindary-color);
+    border-radius: 0.8rem;
     width: 100%;
     font-size: 1rem;
-    padding: 0.5rem 1.5rem 0.5rem 0rem;
-    text-indent: 15px;
+    font-weight: normal;
+    padding: 0.5rem 0;
+    text-indent: 0.6rem;
     outline: none;
     -webkit-appearance: none;
     /* select icon */
