@@ -41,8 +41,8 @@ function loadEvents() {
     navbar.className  = (e.detail.isDisplayed) ? "navbar-slide" : "d-none";
     sidebar.className = (e.detail.isDisplayed) ? "sidebar sidebar-slide" : "sidebar d-none";
   });
-  document.addEventListener("UnauthorizedEvent", () => logoutUser("Unauthorized. Please login."));
-  document.addEventListener("ForbiddenEvent", () => logoutUser("Forbidden. Please login."));
+  document.addEventListener("UnauthorizedEvent", () => showALert("401 Unauthorized."));
+  document.addEventListener("ForbiddenEvent", () => showAlert("403 Forbidden."));
   document.addEventListener('NavigateEvent', (e) => {
     if(e.detail.type === "name")
       app.router.navigateByName(e.detail.name);
@@ -52,11 +52,10 @@ function loadEvents() {
   document.addEventListener("ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show"));
 }
 
-function logoutUser(message) {
+function showAlert(message) {
   document.dispatchEvent(new CustomEvent("AlertEvent", {
         detail: { status: "Information", message: message }
   }));
-  setTimeout(() => app.router.navigateByName("login"), 1111);
 }
 
 loadApp(localStorage.getItem("user"));
