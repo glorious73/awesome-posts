@@ -11,7 +11,7 @@ function renderTemplate() {
                 <input type="text" class="input-search" id="search">
                 <app-select id="dropdown" data-theme="secondary" data-is-border="true" data-option="name" data-value="code" data-items-event="filterDropdownEvent" data-item-selected-event="selectedItemEvent">
                 </app-select>
-                <app-date-picker class="d-none"></app-date-picker>
+                <app-date-picker style="display:none;"></app-date-picker>
             </div>
             <div class="filter-item filter-actions">
                 <app-button data-classes="btn btn-primary btn-filter" id="export">
@@ -49,9 +49,13 @@ export class Filter extends HTMLElement {
       shadow.adoptedStyleSheets = [stylesheet];
   }
 
+  static get observedAttributes() {
+    return ["data-attributes", "data-display-dropdown"];
+  }
+
   connectedCallback() {
     const sroot = this.shadowRoot;
-    this.loadSearch(sroot.querySelector("#search"))
+    this.loadSearch(sroot.querySelector("#search"));
     this.loadDropdown(sroot.querySelector("#dropdown"));
     this.loadAdd(sroot.querySelector("#add"));
     this.loadExport(sroot.querySelector("#export"));
@@ -64,7 +68,7 @@ export class Filter extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if(name === "data-attributes")
-      this.updateAttributes(newValue);
+      this.loadAttributes(newValue);
     if(name === "data-display-dropdown")
       this.shadowRoot.querySelector("#dropdown").className = newValue;
   }
@@ -80,7 +84,10 @@ export class Filter extends HTMLElement {
       }
     });
     search.addEventListener("keypress", (e) => {
-      if (e.keyCode == 13 && (this.search != e.target.value)) this.filter(e);
+      if (e.keyCode == 13 && (this.search != e.target.value)) {
+        this.filter(e);
+        this.search = e.target.value;
+      } 
     });
   }
 
@@ -91,6 +98,7 @@ export class Filter extends HTMLElement {
   loadDates(dates) {
     const isDates = this.getAttribute("data-is-dates");
     if(isDates && isDates == "true") {
+      dates.style.display = "";
       dates.setAttribute("data-begin-id", this.getAttribute("data-begin-id") || "dateBegin");
       dates.setAttribute("data-end-id", this.getAttribute("data-end-id") || "dateEnd");
     }
@@ -113,22 +121,22 @@ export class Filter extends HTMLElement {
     });
   }
 
+  loadAttributes(attributes) {
+    const sroot  = this.shadowRoot;
+    const filter = JSON.parse(attributes);
+    this.search = filter.search || "";
+    sroot.querySelector(".input-search").value = filter.search || "";
+    sroot.querySelector("app-select").setAttribute("data-selected-value", filter.select);
+    sroot.querySelector("app-date-picker").setAttribute("data-begin-value", filter.dateBegin);
+    sroot.querySelector("app-date-picker").setAttribute("data-end-value", filter.dateEnd);
+  }
+
   filter(e) {
     document.dispatchEvent(
       new CustomEvent("searchEvent", {
         detail: e.target
       })
     );
-  }
-
-  updateAttributes(attributes) {
-    const sroot  = this.shadowRoot;
-    const filter = JSON.parse(attributes);
-    this.search = filter.search || "";
-    sroot.querySelector(".input-search").value = filter.search || "";
-    sroot.querySelector("app-select").setAttribute("data-value", filter.select);
-    sroot.querySelector("app-date-picker").setAttribute("data-begin-value", filter.dateBegin);
-    sroot.querySelector("app-date-picker").setAttribute("data-end-value", filter.dateEnd);
   }
 
   async export() {

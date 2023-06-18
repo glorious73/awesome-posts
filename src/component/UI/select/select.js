@@ -42,7 +42,7 @@ export class Select extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["data-begin-id", "data-end-id", "data-begin-value", "data-end-value"];
+    return ["data-selected-option", "data-selected-value"];
   }
 
   connectedCallback() {
@@ -97,9 +97,9 @@ export class Select extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === "data-option" && this.items)
+    if (name === "data-selected-option" && this.items)
       this.setSelectedItem(this.items, newValue);
-    if (name === "data-value" && this.items) {
+    if (name === "data-selected-value" && this.items) {
       const option = Object.keys(this.items).find(key => this.items[key] == newValue);
       this.shadowRoot.querySelector("#selectedItem").value = option;
       this.setValue(option);
@@ -168,7 +168,7 @@ export class Select extends HTMLElement {
       item[this.itemValue]  = this.items[option];
       document.dispatchEvent(
         new CustomEvent(this.itemSelectedEvent, {
-          detail: { data: item }
+          detail: item
         })
       );
     }
