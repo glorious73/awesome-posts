@@ -10,7 +10,7 @@ function renderTemplate() {
         <div class="container">
             <h1>Posts</h1>
             <!-- Filter -->
-            <app-filter data-search-id="title" data-search-placeholder="Title" data-is-add="true" data-add-path="/post" data-is-dates="false" data-begin-id="createdStart" data-end-id="createdEnd">
+            <app-filter data-search-id="title" data-search-placeholder="Title" data-is-add="true" data-add-path="/post" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
             <!-- Table -->
             <app-table class="m-table" data-theme="secondary"></app-table>
@@ -37,11 +37,11 @@ export class Posts extends HTMLElement {
 
   async connectedCallback() {
     this.hiddenFields = "id";
-    // component
-    this.filter = { page: 1, perPage: 20, sort: "-created" }; // todo: add PocketBase filter
-    await this.displayItems();
     // dropdown
-    this.loadDropdown();
+    this.postTypes = await this.loadPostTypes();
+    // component
+    this.filter = await this.loadFilter();
+    await this.displayItems();
     // events
     this.handleFilter       = (e) => this.filterPosts(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
@@ -52,19 +52,58 @@ export class Posts extends HTMLElement {
   }
 
   disconnectedCallback() {
+    // events
     document.removeEventListener("searchEvent", this.handleFilter);
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
     document.removeEventListener("deletedEvent", this.handleDeleteEvent);
+    // cache
+    localStorage.setItem("filter_posts", JSON.stringify(this.filter));
+    localStorage.setItem("list_post_types", JSON.stringify(this.postTypes));
   }
 
-  async loadDropdown() {
+  async loadFilter() {
+    let filter = await JSON.parse(localStorage.getItem("filter_posts") || "{}");
+    if(!filter.page) {
+      const now     = new Date();
+      const nowDate = now.toISOString().split("T")[0];
+      filter = { 
+        page: 1, 
+        perPage: 20,
+        sort: "-created",
+        createdStart: `${nowDate} ${now.getHours()-1}:${now.getMinutes()}`, 
+        createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
+      };
+    } 
+    else
+      this.loadFilterUI(filter);
+    return filter;
+  }
+
+  loadFilterUI(filter) {
+    const UIFilter = {
+      search: filter.title || '',
+      select: filter.type || 'type',
+      dateBegin: filter.createdStart,
+      dateEnd: filter.createdEnd
+    };
+    this.shadowRoot.querySelector("app-filter").setAttribute("data-attributes", JSON.stringify(UIFilter));
+  }
+
+  async loadPostTypes() {
     try {
-      const dropdownItems = [{code: 0, name: "Type"}, {code: 0, name: "Admin"}, {code: 0, name: "User"}];
+      let dropdownItems = JSON.parse(localStorage.getItem("list_post_types"));
+      if(dropdownItems && dropdownItems[0] && dropdownItems[0].name)
+        await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
+      else {
+        dropdownItems = [{code: "type", name: "Type"}, {code: "admin", name: "Admin"}, {code: "user", name: "User"}];
+        // then call API to fetch list
+      }
       document.dispatchEvent(
         new CustomEvent("filterDropdownEvent", {
           detail: { items: dropdownItems }
         })
       );
+      return dropdownItems;
     }
     catch(err) {
       uiService.showAlert("Error", err.message);
@@ -72,12 +111,19 @@ export class Posts extends HTMLElement {
   }
 
   async filterPosts(e) {
-    this.filter.filter = `(title=${e.detail.data.value})`;
+    const { id, value } = e.detail;
+    if(value === '' || value === undefined)
+      delete this.filter[id];
+    else
+      this.filter[id] = value;
     await this.displayItems();
   }
 
   async filterDropdown(e) {
-    this.filter.filter = `(type=${e.detail.data.value})`;
+    if(e.detail.code == 0)
+      delete this.filter.type;
+    else
+      this.filter.type = e.detail.code;
     await this.displayItems();
   }
 
@@ -86,7 +132,6 @@ export class Posts extends HTMLElement {
       const table      = this.shadowRoot.querySelector("app-table");
       const pagination = this.shadowRoot.querySelector("app-pagination");
       table.setAttribute("data-is-loading", true);
-      await new Promise(resolve => setTimeout(resolve, 1000));
       const result = await crudService.getItems("/api/collections/posts/records", this.filter);
       table.setAttribute("data-is-loading", false);
       table.setAttribute("data-items", JSON.stringify({items: result.items, hiddenFields: this.hiddenFields}));
