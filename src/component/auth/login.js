@@ -28,7 +28,8 @@ function renderTemplate() {
             <div class="form-row-two-fields" style="padding-top: 1rem;">
                 <a class="form-row-field auth-link" id="btnGuest">Forgot Password?</a>
                 <button type="submit" style="display: none;"></button>
-                <app-button class="form-row-field w-100" data-text="LOGIN" data-classes="btn btn-secondary w-100" id="btnSubmit">
+                <app-button class="form-row-field w-100" data-classes="btn btn-secondary w-100" id="btnSubmit">
+                  <span slot="text">LOGIN</span>
                 </app-button>
             </div>
         </form>
