@@ -59,7 +59,7 @@ class CRUDService {
             headers,
             query
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     async getItemsForm(apiEndpoint, queryForm) {
