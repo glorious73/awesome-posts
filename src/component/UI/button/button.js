@@ -6,7 +6,9 @@ function renderTemplate() {
     const template = document.createElement("template");
 
     template.innerHTML = /*html*/ `
-    <button class="btn"></button>
+    <button class="btn">
+        <slot name="text"></slot>
+    </button>
   `;
     return template;
 }
@@ -29,9 +31,8 @@ export class Button extends HTMLElement {
     }
 
     connectedCallback() {
-        this.button           = this.shadowRoot.querySelector("button");
-        this.text             = this.getAttribute("data-text") || "click";
-        this.button.innerHTML = this.text;
+        this.button  = this.shadowRoot.querySelector("button");
+        this.text    = this.button.innerHTML || "click";
         for(const c of this.getAttribute("data-classes").split(" "))
             this.button.classList.add(c);
     }
@@ -43,7 +44,6 @@ export class Button extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (this.button && name === "data-text") {
             this.text             = newValue;
-            this.button.innerHTML = newValue;
         }
         if (this.button && name === "data-class")
             this.button.classList.add(newValue);
