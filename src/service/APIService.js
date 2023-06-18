@@ -81,19 +81,19 @@ class APIService {
         }
     }
 
-    _CheckResponseStatus(response) {
-        const { status } = response;
-        return status == "401" || status == "403" ? false : true;
-    }
-
     async _returnResponse(rawResponse) {
         const responseStatusResult = this._CheckResponseStatus(rawResponse);
         if (responseStatusResult)
-            return await rawResponse.json();
+            return (await rawResponse.json());
         else {
             document.dispatchEvent(new CustomEvent(`${this.errors[rawResponse.status]}Event`));
             return { success: false, result: { message: "An error occurred." } };
         }
+    }
+
+    _CheckResponseStatus(response) {
+        const { status } = response;
+        return status == "401" || status == "403" ? false : true;
     }
 }
 

@@ -37,10 +37,10 @@ class UIService {
     loadTable(eventName, data, hiddenFields) {
         document.dispatchEvent(
             new CustomEvent(eventName, {
-            detail: {
-                data: data,
-                hiddenFields: hiddenFields,
-            },
+                detail: {
+                    data: data,
+                    hiddenFields: hiddenFields,
+                },
             })
         );
     }
@@ -48,17 +48,9 @@ class UIService {
     loadPagination(eventName, result) {
         document.dispatchEvent(
             new CustomEvent(eventName, {
-            detail: {
-                data: result,
-            },
-            })
-        );
-    }
-
-    loadAnimation(eventName, isLoading) {
-        document.dispatchEvent(
-            new CustomEvent(eventName, {
-            detail: isLoading,
+                detail: {
+                    data: result,
+                }
             })
         );
     }
