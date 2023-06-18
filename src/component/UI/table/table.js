@@ -27,15 +27,19 @@ function renderTemplate() {
 
 export class Table extends HTMLElement {
   constructor() {
-      super();
+    super();
 
-      const shadow = this.attachShadow({ mode: "open" });
-      const template = renderTemplate();
-      shadow.appendChild(template.content.cloneNode(true));
+    const shadow = this.attachShadow({ mode: "open" });
+    const template = renderTemplate();
+    shadow.appendChild(template.content.cloneNode(true));
 
-      const stylesheet = new CSSStyleSheet();
-      stylesheet.replace(styles);
-      shadow.adoptedStyleSheets = [stylesheet];
+    const stylesheet = new CSSStyleSheet();
+    stylesheet.replace(styles);
+    shadow.adoptedStyleSheets = [stylesheet];
+  }
+
+  static get observedAttributes() {
+    return ["data-is-loading"];
   }
 
   connectedCallback() {
@@ -44,17 +48,17 @@ export class Table extends HTMLElement {
     const tableTheme = this.getAttribute("data-theme");
     tableElement.classList.add(`table-${tableTheme || "primary"}`);
     // Actions
-    const actions     = this.getAttribute("data-actions");
+    const actions = this.getAttribute("data-actions");
     this.isActionable = actions != null && actions != undefined;
     if (this.isActionable) {
-      this.isViewAction   = actions.includes("view");
-      this.isEditAction   = actions.includes("edit");
+      this.isViewAction = actions.includes("view");
+      this.isEditAction = actions.includes("edit");
       this.isDeleteAction = actions.includes("delete");
     }
     // Events
-    this.tableEvent       = this.getAttribute("data-event");
-    this.updateEvent      = this.getAttribute("data-update-event");
-    this.loadingEvent     = this.getAttribute("data-loading-event");
+    this.tableEvent = this.getAttribute("data-event");
+    this.updateEvent = this.getAttribute("data-update-event");
+    this.loadingEvent = this.getAttribute("data-loading-event");
     this.handleTableEvent = (e) => {
       const data = e.detail.data;
       if (data && data.length > 0) {
@@ -72,20 +76,18 @@ export class Table extends HTMLElement {
       const data = e.detail.data;
       if (data) this.populateTable(e);
     };
-    this.handleLoadingEvent = (e) => {
-      const tbody     = this.shadowRoot.querySelector("#tableBody");
-      tbody.innerHTML = "";
-      this.toggleElement('#loadingData', e.detail); // is loading
-    };
     document.addEventListener(this.tableEvent, this.handleTableEvent);
     document.addEventListener(this.updateEvent, this.handleUpdateEvent);
-    document.addEventListener(this.loadingEvent, this.handleLoadingEvent);
   }
 
   disconnectedCallback() {
     document.removeEventListener(this.tableEvent, this.handleTableEvent);
     document.removeEventListener(this.updateEvent, this.handleUpdateEvent);
-    document.removeEventListener(this.loadingEvent, this.handleLoadingEvent);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "data-is-loading")
+      this.setLoading(newValue);
   }
 
   populateTable(e) {
@@ -100,9 +102,9 @@ export class Table extends HTMLElement {
   }
 
   populateHeader(e) {
-    const data    = e.detail.data;
+    const data = e.detail.data;
     const headers = Object.keys(data[0]);
-    const thead   = this.shadowRoot.querySelector("#tableHead");
+    const thead = this.shadowRoot.querySelector("#tableHead");
     let tableHead = "<tr>";
     for (const header of headers)
       tableHead += !this.hiddenFields.includes(header)
@@ -121,9 +123,8 @@ export class Table extends HTMLElement {
       tableBody += '<tr class="table-tr">';
       for (const [key, value] of Object.entries(item))
         tableBody += !this.hiddenFields.includes(key)
-          ? `<td scope="row" data-label="${key.toUpperCase()}" class="wrap-table-text">${
-              value
-            }</td>`
+          ? `<td scope="row" data-label="${key.toUpperCase()}" class="wrap-table-text">${value
+          }</td>`
           : ``;
       if (this.isActionable) tableBody += this.populateActionsInRow(item.id);
       tableBody += "</tr>";
@@ -173,13 +174,13 @@ export class Table extends HTMLElement {
   viewItem(e) {
     const viewLink = this.getAttribute("data-view-path");
     const id = e.target.id.split("-")[1] || e.target.parentElement.id.split("-")[1];
-    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${viewLink}/${id}` }}));
+    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${viewLink}/${id}` } }));
   }
 
   editItem(e) {
     const editLink = this.getAttribute("data-edit-path");
     const id = e.target.id.split("-")[1] || e.target.parentElement.id.split("-")[1];
-    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${editLink}/${id}` }}));
+    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${editLink}/${id}` } }));
   }
 
   deleteItem(e) {
@@ -202,9 +203,16 @@ export class Table extends HTMLElement {
     );
   }
 
-  toggleElement(selector, isForce=null) {
+  setLoading(newValue) {
+    console.log(`loading. newValue = ${newValue}`);
+    const tbody = this.shadowRoot.querySelector("#tableBody");
+    tbody.innerHTML = "";
+    this.toggleElement('#loadingData', newValue === "true"); // is loading
+  }
+
+  toggleElement(selector, isForce = null) {
     const element = this.shadowRoot.querySelector(`${selector}`);
-    if(isForce != null)
+    if (isForce != null)
       element.classList.toggle("show", isForce);
     else
       element.classList.toggle("show");
