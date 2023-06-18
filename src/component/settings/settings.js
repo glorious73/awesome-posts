@@ -1,12 +1,15 @@
 import styles from './settings.css?raw';
 
+import authService from '../../service/AuthService';
+
 function renderTemplate() {
     const template = document.createElement("template");
 
     template.innerHTML = /*html*/ `
         <div style="padding: 2rem;">
             <h1>Settings</h1>
-            <app-button data-text="Logout" data-classes="btn btn-secondary">
+            <app-button data-classes="btn btn-secondary">
+                <span slot="text">Logout</span>
             </app-button>
         </div>
     `;
@@ -35,7 +38,6 @@ export class Settings extends HTMLElement {
     }
 
     logout() {
-        localStorage.clear();
-        document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "login"} }));
+        authService.logout();
     }
 }
