@@ -39,7 +39,7 @@ export class Table extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["data-is-loading"];
+    return ["data-items", "data-is-loading"];
   }
 
   connectedCallback() {
@@ -55,55 +55,42 @@ export class Table extends HTMLElement {
       this.isEditAction = actions.includes("edit");
       this.isDeleteAction = actions.includes("delete");
     }
-    // Events
-    this.tableEvent = this.getAttribute("data-event");
-    this.updateEvent = this.getAttribute("data-update-event");
-    this.loadingEvent = this.getAttribute("data-loading-event");
-    this.handleTableEvent = (e) => {
-      const data = e.detail.data;
-      if (data && data.length > 0) {
+  }
+
+  disconnectedCallback() {
+    
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "data-items") {
+      const data = JSON.parse(newValue);
+      if (data && data.items && data.items.length > 0) {
         this.shadowRoot.querySelector(".table").classList.remove("d-none");
         this.toggleElement('#noData', false);
-        this.populateTable(e);
+        this.populateTable(data);
       }
       else {
         this.shadowRoot.querySelector(".table").classList.add("d-none");
         this.toggleElement('#noData', true);
       }
       this.toggleElement('#loadingData', false);
-    };
-    this.handleUpdateEvent = (e) => {
-      const data = e.detail.data;
-      if (data) this.populateTable(e);
-    };
-    document.addEventListener(this.tableEvent, this.handleTableEvent);
-    document.addEventListener(this.updateEvent, this.handleUpdateEvent);
-  }
-
-  disconnectedCallback() {
-    document.removeEventListener(this.tableEvent, this.handleTableEvent);
-    document.removeEventListener(this.updateEvent, this.handleUpdateEvent);
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
+    }
     if (name === "data-is-loading")
       this.setLoading(newValue);
   }
 
-  populateTable(e) {
+  populateTable(data) {
     if (!this.hiddenFields)
-      this.hiddenFields = e.detail.hiddenFields
-        ? e.detail.hiddenFields.split(",")
-        : "";
+      this.hiddenFields = data.hiddenFields ? data.hiddenFields.split(",") : "";
     this.toggleElement("#noData", false);
-    this.populateHeader(e);
-    this.populateBody(e);
+    this.populateHeader(data);
+    this.populateBody(data);
     this.addActionEvents();
   }
 
-  populateHeader(e) {
-    const data = e.detail.data;
-    const headers = Object.keys(data[0]);
+  populateHeader(data) {
+    const { items } = data;
+    const headers = Object.keys(items[0]);
     const thead = this.shadowRoot.querySelector("#tableHead");
     let tableHead = "<tr>";
     for (const header of headers)
@@ -115,11 +102,11 @@ export class Table extends HTMLElement {
     thead.innerHTML = tableHead;
   }
 
-  populateBody(e) {
+  populateBody(data) {
     const tbody = this.shadowRoot.querySelector("#tableBody");
-    const data = e.detail.data;
+    const { items } = data;
     let tableBody = "";
-    for (const item of data) {
+    for (const item of items) {
       tableBody += '<tr class="table-tr">';
       for (const [key, value] of Object.entries(item))
         tableBody += !this.hiddenFields.includes(key)
@@ -204,7 +191,6 @@ export class Table extends HTMLElement {
   }
 
   setLoading(newValue) {
-    console.log(`loading. newValue = ${newValue}`);
     const tbody = this.shadowRoot.querySelector("#tableBody");
     tbody.innerHTML = "";
     this.toggleElement('#loadingData', newValue === "true"); // is loading

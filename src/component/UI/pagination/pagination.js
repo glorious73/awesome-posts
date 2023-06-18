@@ -35,6 +35,10 @@ export class Pagination extends HTMLElement {
       shadow.adoptedStyleSheets = [stylesheet];
   }
 
+  static get observedAttributes() {
+    return ["data-pagination"];
+  }
+
   connectedCallback() {
     // theme
     const pageElement = this.shadowRoot.querySelector(".page-list");
@@ -48,23 +52,27 @@ export class Pagination extends HTMLElement {
     this.pagesView  = 7;
     // event
     this.searchEvent = this.getAttribute("data-search-event") || "searchEvent";
-    this.pageEvent   = this.getAttribute("data-event");
-    this.handlePageEvent = (e) => {
-      this.assignAttributes(e.detail.data);
-      this.render();
-      this.addPagesEvents();
-      this.addPreviousNext();
-    };
-    document.addEventListener(this.pageEvent, this.handlePageEvent);
   }
 
   disconnectedCallback() {
-    document.removeEventListener(this.pageEvent, this.handlePageEvent);
+    
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "data-pagination") {
+      const data = JSON.parse(newValue);
+      if(data) {
+        this.assignAttributes(data);
+        this.render();
+        this.addPagesEvents();
+        this.addPreviousNext();
+      }
+    }
   }
 
   assignAttributes(data) {
-    this.pageNumber = data.pageNumber;
-    this.pageSize   = data.pageSize;
+    this.pageNumber = data.page;
+    this.pageSize   = data.perPage;
     this.totalPages = data.totalPages;
     this.totalItems = data.totalItems;
   }

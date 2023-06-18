@@ -33,27 +33,6 @@ class UIService {
             });
         }
     }
-
-    loadTable(eventName, data, hiddenFields) {
-        document.dispatchEvent(
-            new CustomEvent(eventName, {
-                detail: {
-                    data: data,
-                    hiddenFields: hiddenFields,
-                },
-            })
-        );
-    }
-
-    loadPagination(eventName, result) {
-        document.dispatchEvent(
-            new CustomEvent(eventName, {
-                detail: {
-                    data: result,
-                }
-            })
-        );
-    }
 }
 
 const uiService = UIService.getInstance();
