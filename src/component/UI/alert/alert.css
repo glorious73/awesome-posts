@@ -71,21 +71,21 @@
 .icon-alert {
     width: 3rem;
     height: 3rem;
-    stroke-width: 0.99px !important;
+    stroke-width: 0.8px !important;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
     vertical-align: -0.15rem;
 }
 
-.stroke-success {
-    stroke: var(--success-color);
+.fill-success {
+    fill: var(--success-color);
 }
-.stroke-info {
-    stroke: var(--secondary-color);
+.fill-info {
+    fill: var(--secondary-color);
 }
-.stroke-error {
-    stroke: var(--error-color);
+.fill-error {
+    fill: var(--error-color);
 }
 
 @media screen and (max-width: 992px) {

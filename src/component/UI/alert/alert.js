@@ -67,22 +67,22 @@ export class Alert extends HTMLElement {
   setIcon(status) {
       const svgIcon = this.shadowRoot.querySelector("svg");
       let icon = "";
-      let stroke = "";
+      let fill = "";
       switch (status) {
         case "Success":
-          icon = "check2-circle";
-          stroke = "stroke-success";
+          icon = "check2-circle-fill";
+          fill = "fill-success";
           break;
         case "Error":
-          icon = "x-circle";
-          stroke = "stroke-error";
+          icon = "x-circle-fill";
+          fill = "fill-error";
           break;
         default:
-          icon = "exclamation-circle";
-          stroke = "stroke-info";
+          icon = "exclamation-circle-fill";
+          fill = "fill-info";
       }
       svgIcon.innerHTML = `${Globals.icons.querySelector(`#${icon}`).innerHTML}`;
       svgIcon.classList.add(`icon-alert`);
-      svgIcon.classList.add(stroke);
+      svgIcon.classList.add(fill);
   }
 }
