@@ -50,7 +50,34 @@
     fill: currentColor !important;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .filter-actions {
+        width: 100%;
+        flex-direction: row;
+        place-content: center center;
+        place-items: center center;
+        padding-top: 1rem;
+        gap: 1rem 1.5rem;   
+    }
+}
+
 @media screen and (max-width: 768px) {
+    .filter {
+        flex-direction: column;
+        row-gap: 1rem;
+        justify-content: center;
+        align-items: center; 
+    }
+    .filter-item {
+        flex: 1 0 0%;
+    }
+    .filter-actions app-button {
+        flex: 0 1 0%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 576px) {
     .filter {
         row-gap: 1rem;
         justify-content: center;
