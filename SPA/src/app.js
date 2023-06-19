@@ -20,7 +20,7 @@ class App {
             }
         });
         this.router.notFound(() => {
-            const notFound = `<h1>Whoops</h1><h2>Page not found</h2>`;
+            const notFound = `<app-not-found></app-not-found>`;
             this.loadComponent({}, notFound);
         });
         Routes.forEach(route => { 
