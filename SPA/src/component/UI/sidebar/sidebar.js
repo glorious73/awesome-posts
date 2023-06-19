@@ -108,6 +108,7 @@ export class Sidebar extends HTMLElement {
         items.forEach(item => {
             item.style.display = this.isDisplayed(user, item.getAttribute("data-roles")) ? "" : "none";
         });
+        return true;
     }
 
     isDisplayed(user, roles) {

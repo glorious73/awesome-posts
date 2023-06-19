@@ -40,6 +40,7 @@ function loadEvents() {
     const sidebar     = document.querySelector("app-sidebar");
     navbar.className  = (e.detail.isDisplayed) ? "navbar-slide" : "d-none";
     sidebar.className = (e.detail.isDisplayed) ? "sidebar sidebar-slide" : "sidebar d-none";
+    const result      = sidebar.filterItemsForRole();
   });
   document.addEventListener("UnauthorizedEvent", () => showALert("401 Unauthorized."));
   document.addEventListener("ForbiddenEvent", () => showAlert("403 Forbidden."));
