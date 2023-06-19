@@ -12,11 +12,8 @@ function renderTemplate() {
             </a>
             <div class="nav-header">
                 <div class="nav-title">
-                    <img class="navbar-brand-img" src="img/vite.svg" alt="Logo" />
+                    <img class="navbar-brand-img" src="/img/vite.svg" alt="Logo" />
                 </div>  
-            </div>
-            <div class="nav-links">
-                <!--Empty-->
             </div>
         </nav>
     `;
