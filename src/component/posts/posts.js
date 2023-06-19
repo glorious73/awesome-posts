@@ -8,13 +8,10 @@ function renderTemplate() {
 
   template.innerHTML = /*html*/ `
         <div class="container">
-            <h1>Posts</h1>
-            <!-- Filter -->
+            <h1 class="title">Posts</h1>
             <app-filter data-search-id="title" data-search-placeholder="Title" data-is-add="true" data-add-path="/post" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
-            <!-- Table -->
             <app-table class="m-table" data-theme="secondary"></app-table>
-            <!-- Pagination -->
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
             </app-pagination>
         </div>
