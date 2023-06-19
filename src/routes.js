@@ -20,6 +20,16 @@ export const Routes = [
         component: '<app-about class="fade-in"></app-about>'
     },
     {
+        name: 'accounts',
+        path: '/accounts/users',
+        component: '<app-accounts class="fade-in"></app-accounts>'
+    },
+    {
+        name: 'accounts.roles',
+        path: '/accounts/roles',
+        component: '<app-accounts class="fade-in"></app-accounts>'
+    },
+    {
         name: 'settings',
         path: '/settings',
         component: '<app-settings class="fade-in"></app-settings>'

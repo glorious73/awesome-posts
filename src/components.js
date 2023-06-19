@@ -4,6 +4,9 @@ import { Login } from "./component/auth/login";
 import { Dashboard } from "./component/dashboard/dashboard";
 import { Posts } from "./component/posts/posts";
 import { About } from "./component/about/about";
+import { Accounts } from "./component/accounts/accounts";
+import { Users } from "./component/accounts/users/users";
+import { Roles } from "./component/accounts/roles/roles";
 import { Settings } from "./component/settings/settings";
 // UI
 import { Navbar } from "./component/UI/navbar/navbar";
@@ -28,6 +31,9 @@ export class Components {
         customElements.define('app-dashboard', Dashboard);
         customElements.define('app-posts', Posts);
         customElements.define('app-about', About);
+        customElements.define('app-accounts', Accounts);
+        customElements.define('app-users', Users);
+        customElements.define('app-roles', Roles);
         customElements.define('app-settings', Settings);
         // UI
         customElements.define('app-alerts', Alerts);
