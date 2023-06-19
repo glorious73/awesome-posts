@@ -112,7 +112,7 @@
 @media screen and (max-width: 768px) {
     .sidebar-scroll {
         width: 100%;
-        height: 99.5vh;
+        height: 99.9vh;
     }
     .sidebar-header {
         align-self: flex-start;

@@ -6,7 +6,7 @@ function renderTemplate() {
     template.innerHTML = /*html*/`
         <div class="sidebar-scroll">
             <section class="sidebar-header">
-                <img src="img/vite.svg" class="sidebar-img"/>
+                <img src="/img/vite.svg" class="sidebar-img"/>
                 <a class="sidebar-header-icon">
                     <svg class="icon-sidebar-header" viewBox="-0.5 -0.5 16.9 16.9">
                     ${Globals.icons.querySelector(`#caret-left`).innerHTML}
@@ -14,26 +14,32 @@ function renderTemplate() {
                 </a>
             </section>
             <section class="sidebar-menu">
-                <a class="sidebar-item active" title="Dashboard" data-route-name="dashboard">
+                <a class="sidebar-item active" title="Dashboard" data-route-name="dashboard" data-roles="admin,user">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#bar-chart-line-fill`).innerHTML}
                     </svg>
                     <span>Dashboard</span>
                 </a>
-                <a class="sidebar-item" title="Posts" data-route-name="posts">
+                <a class="sidebar-item" title="Posts" data-route-name="posts" data-roles="admin,user">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#chat-left-text`).innerHTML}
                     </svg>
                     <span>Posts</span>
                 </a>
-                <a class="sidebar-item" title="About" data-route-name="about">
+                <a class="sidebar-item" title="About" data-route-name="about" data-roles="admin,user">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#info-square-fill`).innerHTML}
                     </svg>
                     <span>About</span>
                 </a>
                 <div class="sidebar-separator"></div>
-                <a class="sidebar-item" title="Settings" data-route-name="settings">
+                <a class="sidebar-item" title="Account" data-route-name="accounts" data-roles="admin">
+                    <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#person-lines-fill`).innerHTML}
+                    </svg>
+                    <span>Accounts</span>
+                </a>
+                <a class="sidebar-item" title="Settings" data-route-name="settings" data-roles="admin,user">
                     <svg class="icon-sidebar" viewBox="-0.5 -0.5 16.9 16.9">
                         ${Globals.icons.querySelector(`#gear`).innerHTML}
                     </svg>
@@ -61,6 +67,7 @@ export class Sidebar extends HTMLElement {
     }
 
     connectedCallback() {
+        const result = this.filterItemsForRole();
         this.handleLocationChange = (e) => this.updateActiveItem(e);
         document.addEventListener("LocationChangedEvent", this.handleLocationChange);
         this.shadowRoot.querySelectorAll(".sidebar-item").forEach(item => {
@@ -89,11 +96,26 @@ export class Sidebar extends HTMLElement {
     }
 
     updateActiveItem(e) {
-        const route = e.detail;
+        const { route } = e.detail;
         this.shadowRoot.querySelectorAll(".sidebar-item").forEach((item) => {
-            item.className = (route.url == item.getAttribute("data-route-name")) ? "sidebar-item active" : "sidebar-item";
+            item.className = (route.name.split(".")[0] == item.getAttribute("data-route-name")) ? "sidebar-item active" : "sidebar-item";
         });
-        if(route.url == '')
-            this.shadowRoot.querySelector('.sidebar-item').className = 'sidebar-item active';
+    }
+
+    filterItemsForRole() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const items = this.shadowRoot.querySelectorAll(".sidebar-item");
+        items.forEach(item => {
+            item.style.display = this.isDisplayed(user, item.getAttribute("data-roles")) ? "" : "none";
+        });
+    }
+
+    isDisplayed(user, roles) {
+        let filterItemsForRole = false;
+        if (user)
+            for (const role of roles.split(","))
+                if (user.role.toLowerCase() == role.toLowerCase())
+                    filterItemsForRole = true;
+        return filterItemsForRole;
     }
 }
