@@ -16,10 +16,12 @@ import { Alerts } from "./component/UI/alert/alerts";
 import { Alert } from "./component/UI/alert/alert";
 import { Button } from "./component/UI/button/button";
 import { Select } from "./component/UI/select/select";
+import { Switch } from "./component/UI/switch/switch";
+import { File } from "./component/UI/file/file";
 import { DatePicker } from "./component/UI/datepicker/datepicker";
 import { Filter } from "./component/UI/filter/filter";
-import { Pagination } from "./component/UI/pagination/pagination";
 import { Table } from "./component/UI/table/table";
+import { Pagination } from "./component/UI/pagination/pagination";
 
 export class Components {
     constructor() { }
@@ -43,6 +45,8 @@ export class Components {
         customElements.define('app-sidebar', Sidebar);
         customElements.define('app-button', Button);
         customElements.define('app-select', Select);
+        customElements.define('app-file', File);
+        customElements.define('app-switch', Switch);
         customElements.define('app-date-picker', DatePicker);
         customElements.define('app-filter', Filter);
         customElements.define('app-table', Table);
