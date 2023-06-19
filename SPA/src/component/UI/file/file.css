@@ -1,0 +1,62 @@
+input[type="file"] {
+    display: none;
+    width: 0;
+    height: 0;
+    float: right; /* Reposition so the validation message shows over the label */
+    z-index: 10;
+}
+
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.file-upload {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.5rem;
+    width: 100%;
+    text-indent: 1rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
+}
+.file-upload-name {
+    display: block;
+    margin-top: 0.5rem;
+    text-indent: 0.5rem;
+}
+
+/* primary */
+.file-upload-primary {
+    background-color: var(--primary-color);
+    border: 1.5px solid var(--accent-out-color);
+    color: var(--text-color);
+}
+.file-upload-primary:hover {
+    background-color: var(--accent-color);
+}
+.file-upload-primary:focus {
+    border-width: 2px;
+}
+/* secondary */
+.file-upload-secondary {
+    background-color: var(--secondary-color);
+    border: 1.5px solid var(--secondary-color);
+    color: var(--primary-color);
+}
+.file-upload-secondary:hover {
+    background-color: var(--active-color);
+    border: 1.5px solid var(--active-color);
+    color: var(--primary-color);
+}
+.file-upload-secondary:focus {
+    border-width: 2px;
+}
+
+.text-wrap {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-wrap: anywhere !important;
+}
