@@ -1,16 +1,16 @@
 # Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+SPA/logs
+SPA/*.log
+SPA/npm-debug.log*
+SPA/yarn-debug.log*
+SPA/yarn-error.log*
+SPA/pnpm-debug.log*
+SPA/lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+SPA/node_modules
+SPA/dist
+SPA/dist-ssr
+SPA/*.local
 
 # Editor directories and files
 .vscode/*
