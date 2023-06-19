@@ -3,11 +3,13 @@
     height: 2.5rem;
     text-align: center;
     font-size: 1.1rem;
+    border-radius: 0.8rem;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
     outline: none;
     cursor: pointer;
 }
 .btn:hover, .active {
+    cursor: pointer;
     background-color: var(--active-color);
     border: 1px solid var(--active-color);
     color: var(--primary-color);
@@ -15,7 +17,7 @@
 .btn:hover svg, .active svg {
     fill: var(--primary-color);
 }
-.btn:disabled {
+.btn:disabled, .btn:disabled:hover {
     opacity: 0.6;
     cursor: progress;
 }
@@ -35,10 +37,6 @@
     border: 1px solid var(--error-color);
     color: var(--primary-color);
 }
-.btn-error:hover {
-    opacity: 0.75;
-    cursor: pointer;
-}
 
 .btn-filter {
     display: flex;
@@ -47,15 +45,17 @@
     place-items: center center;
     width: 8rem;
     height: 3rem;
-    border-radius: 0.8rem;
     font-size: 1.3rem;
 }
-.btn-filter:hover {
-    cursor: pointer;
-}
-.btn-filter.disabled, .btn-filter.disabled:hover {
-    opacity: 0.6 !important;
-    cursor: progress !important;
+.btn-settings {
+    display: flex;
+    column-gap: 0.3rem;
+    place-content: center center;
+    place-items: center center;
+    width: 8rem;
+    height: 3rem;
+    padding: 0 0.5rem;
+    font-size: 1.2rem;
 }
 
 .w-100 {
@@ -117,5 +117,9 @@
         place-items: center stretch;
         width: 13rem;
         height: 2.6rem;
+    }
+    .btn-settings {
+        width: 70vw;
+        margin-top: 1rem;
     }
 }
