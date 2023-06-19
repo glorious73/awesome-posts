@@ -4,8 +4,8 @@ function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
-        <div style="padding: 2rem;">
-            <h1>Dashboard</h1>
+        <div class="container">
+            <h1 class="title">Dashboard</h1>
         </div> 
     `;
   return template;
