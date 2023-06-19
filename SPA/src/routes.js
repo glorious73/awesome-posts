@@ -5,6 +5,11 @@ export const Routes = [
         component: '<app-auth class="fade-in"></app-auth>'
     },
     {
+        name: 'password.forgot',
+        path: '/password/forgot',
+        component: '<app-auth class="fade-in"></app-auth>'
+    },
+    {
         name: 'dashboard',
         path: '/',
         component: '<app-dashboard class="fade-in"></app-dashboard>'

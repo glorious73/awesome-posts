@@ -26,7 +26,7 @@ class AuthService {
             headers,
             jsonFormData
         );
-        if(response.record)
+        if (response.record)
             return (response.record);
         throw new Error("Username or Password is incorrect.");
     }
@@ -54,6 +54,21 @@ class AuthService {
 
     notifyForbiddenUser(e) {
         uiService.showAlert("Information", "403 Forbidden.");
+    }
+
+    async sendResetPasswordEmail(forgotPasswordForm) {
+        // build request
+        const jsonFormData = formService.buildJsonFormData(forgotPasswordForm);
+        const headers = formService.buildHeaders();
+        // Execute request
+        const response = await apiService.POST(
+            `${Globals.API_URL}/api/auth/forgotPassword`,
+            headers,
+            jsonFormData
+        );
+        /* if (response.success) return response.result;
+        else throw new Error(`${response.result.message}`); */
+        return response;
     }
 }
 

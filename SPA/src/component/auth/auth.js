@@ -1,7 +1,6 @@
 import styles from './auth.css?raw';
 
 import uiService from '../../service/UIService';
-import { Routes } from '../../routes';
 
 function renderTemplate() {
   const template = document.createElement("template");
@@ -44,11 +43,11 @@ export class Auth extends HTMLElement {
   addAuthComponent() {
     const { pathname } = window.location;
     const authForm = this.shadowRoot.querySelector(".auth-form");
-    if(pathname == Routes[0].path)
+    if(pathname == 'login')
       authForm.innerHTML = `<app-login></app-login>`;
-    else if(pathname == "forgotPassword")
+    else if(pathname == "/password/forgot")
       authForm.innerHTML = '<app-forgot-password></app-forgot-password>';
-    else if(pathname.match(/resetPassword/))
+    else if(pathname.match(/password\/reset*/))
       authForm.innerHTML = '<app-reset-password></app-reset-password>';
     else
       authForm.innerHTML = `<app-login></app-login>`; // default

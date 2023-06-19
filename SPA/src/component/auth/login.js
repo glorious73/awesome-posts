@@ -25,12 +25,14 @@ function renderTemplate() {
                   </svg>
                 </div>
             </div>
-            <div class="form-row-two-fields" style="padding-top: 1rem;">
-                <a class="form-row-field auth-link" id="btnGuest">Forgot Password?</a>
+            <div class="form-row" style="padding-top: 1rem;">
                 <button type="submit" style="display: none;"></button>
-                <app-button class="form-row-field w-100" data-classes="btn btn-secondary w-100" id="btnSubmit">
+                <app-button class="w-100" data-classes="btn btn-secondary w-100" id="btnSubmit">
                   <span slot="text">LOGIN</span>
                 </app-button>
+            </div>
+            <div class="form-row" style="text-align:center;">
+              <a class="auth-link" id="btnForgot">Forgot Password?</a>
             </div>
         </form>
     `;
@@ -63,6 +65,10 @@ export class Login extends HTMLElement {
         await this.login(e);
     });
     sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => await this.login(new FormData(form)));
+    sroot.querySelector("#btnForgot").addEventListener("click", (e) => { 
+      this.shadowRoot.getRootNode().innerHTML = "<app-forgot-password></app-forgot-password>";
+      history.pushState({ component: "app-forgot-password" }, null,`/password/forgot`);
+    });
   }
 
   disconnectedCallback() {

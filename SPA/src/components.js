@@ -1,6 +1,7 @@
 // App
 import { Auth } from "./component/auth/auth";
 import { Login } from "./component/auth/login";
+import { ForgotPassword } from "./component/auth/forgotpassword";
 import { Dashboard } from "./component/dashboard/dashboard";
 import { Posts } from "./component/posts/posts";
 import { About } from "./component/about/about";
@@ -30,6 +31,7 @@ export class Components {
         // App
         customElements.define('app-auth', Auth);
         customElements.define('app-login', Login);
+        customElements.define('app-forgot-password', ForgotPassword);
         customElements.define('app-dashboard', Dashboard);
         customElements.define('app-posts', Posts);
         customElements.define('app-about', About);
