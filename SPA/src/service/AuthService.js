@@ -70,6 +70,21 @@ class AuthService {
         else throw new Error(`${response.result.message}`); */
         return response;
     }
+
+    async resetPassword(resetPasswordForm) {
+        // build request
+        const jsonFormData = formService.buildJsonFormData(resetPasswordForm);
+        const headers = formService.buildHeaders();
+        // Execute request
+        const response = await apiService.PUT(
+          `${Globals.API_URL}/api/auth/resetPassword`,
+          headers,
+          jsonFormData
+        );
+        /* if (response.success) return response.result;
+        else throw new Error(`${response.result.message}`); */
+        return response;
+      }    
 }
 
 const authService = AuthService.getInstance();

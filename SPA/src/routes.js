@@ -10,6 +10,11 @@ export const Routes = [
         component: '<app-auth class="fade-in"></app-auth>'
     },
     {
+        name: 'password.reset',
+        path: '/password/reset',
+        component: '<app-auth class="fade-in"></app-auth>'
+    },
+    {
         name: 'dashboard',
         path: '/',
         component: '<app-dashboard class="fade-in"></app-dashboard>'

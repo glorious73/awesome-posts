@@ -10,10 +10,10 @@ async function loadApp(isLoggedIn) {
   loadContent();
   loadEvents();
   app.loadRoutes();
-  if(isLoggedIn)
+  if(isLoggedIn || location.pathname.includes("password"))
     app.router.resolve();
   else
-    app.router.navigateByName("login");
+    app.router.navigateByName("login");  
 }
 
 async function loadIcons() {

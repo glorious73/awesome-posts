@@ -55,10 +55,7 @@ export class ForgotPassword extends HTMLElement {
         await this.sendResetEmail(e);
     });
     sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => await this.sendResetEmail(new FormData(form)));
-    sroot.querySelector("#btnLogin").addEventListener("click", (e) => { 
-      this.shadowRoot.getRootNode().innerHTML = "<app-login></app-login>";
-      history.pushState({ component: "app-login" }, null,`/login`);
-    });
+    sroot.querySelector("#btnLogin").addEventListener("click", (e) => this.navigateToLogin());
   }
 
   disconnectedCallback() {
@@ -70,6 +67,8 @@ export class ForgotPassword extends HTMLElement {
     try {
       button.setAttribute("data-is-loading", true);
       const result = await authService.sendResetPasswordEmail(e.target);
+      uiService.showAlert("Success", "Sent reset password instructions.");
+      this.navigateToLogin();
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);
@@ -77,5 +76,10 @@ export class ForgotPassword extends HTMLElement {
     finally {
       button.setAttribute("data-is-loading", false);
     }
+  }
+
+  navigateToLogin() {
+    this.shadowRoot.getRootNode().innerHTML = "<app-login></app-login>";
+    history.pushState({ component: "app-login" }, null,`/login`);
   }
 }

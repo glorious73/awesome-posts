@@ -2,6 +2,7 @@
 import { Auth } from "./component/auth/auth";
 import { Login } from "./component/auth/login";
 import { ForgotPassword } from "./component/auth/forgotpassword";
+import { ResetPassword } from "./component/auth/resetpassword";
 import { Dashboard } from "./component/dashboard/dashboard";
 import { Posts } from "./component/posts/posts";
 import { About } from "./component/about/about";
@@ -10,6 +11,7 @@ import { Users } from "./component/accounts/users/users";
 import { Roles } from "./component/accounts/roles/roles";
 import { Settings } from "./component/settings/settings";
 // UI
+import { NotFound } from "./component/notfound/notfound";
 import { Navbar } from "./component/UI/navbar/navbar";
 import { Sidebar } from "./component/UI/sidebar/sidebar";
 import { Modal } from "./component/UI/modal/modal";
@@ -32,6 +34,7 @@ export class Components {
         customElements.define('app-auth', Auth);
         customElements.define('app-login', Login);
         customElements.define('app-forgot-password', ForgotPassword);
+        customElements.define('app-reset-password', ResetPassword);
         customElements.define('app-dashboard', Dashboard);
         customElements.define('app-posts', Posts);
         customElements.define('app-about', About);
@@ -40,6 +43,7 @@ export class Components {
         customElements.define('app-roles', Roles);
         customElements.define('app-settings', Settings);
         // UI
+        customElements.define('app-not-found', NotFound);
         customElements.define('app-alerts', Alerts);
         customElements.define('app-alert', Alert);
         customElements.define('app-modal', Modal);
