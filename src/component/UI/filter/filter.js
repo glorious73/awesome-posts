@@ -50,7 +50,7 @@ export class Filter extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["data-attributes", "data-display-dropdown"];
+    return ["data-attributes", "data-is-dropdown"];
   }
 
   connectedCallback() {
@@ -69,8 +69,8 @@ export class Filter extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     if(name === "data-attributes")
       this.loadAttributes(newValue);
-    if(name === "data-display-dropdown")
-      this.shadowRoot.querySelector("#dropdown").className = newValue;
+    if(name === "data-is-dropdown")
+      this.shadowRoot.querySelector("#dropdown").style.display = (newValue == "true") ? "" : "none";
   }
 
   loadSearch(search) {
@@ -92,7 +92,8 @@ export class Filter extends HTMLElement {
   }
 
   loadDropdown(dropdown) {
-    
+    const isDropdown = this.getAttribute("data-is-dropdown");
+    this.shadowRoot.querySelector("#dropdown").style.display = (isDropdown == "true") ? "" : "none";
   }
 
   loadDates(dates) {

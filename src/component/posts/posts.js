@@ -9,7 +9,7 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
         <div class="container">
             <h1 class="title">Posts</h1>
-            <app-filter data-search-id="title" data-search-placeholder="Title" data-is-add="true" data-add-path="/post" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
+            <app-filter data-search-id="title" data-search-placeholder="Title" data-is-dropdown="true" data-is-add="true" data-add-path="/posts/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
             <app-table class="m-table" data-theme="secondary"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
@@ -35,12 +35,12 @@ export class Posts extends HTMLElement {
   async connectedCallback() {
     this.hiddenFields = "id";
     // dropdown
-    this.postTypes = await this.loadPostTypes();
+    this.postTypes = await this.loadDropdown();
     // component
     this.filter = await this.loadFilter();
     await this.displayItems();
     // events
-    this.handleFilter       = (e) => this.filterPosts(e);
+    this.handleFilter       = (e) => this.filterItems(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
     this.handleDeleteEvent  = async (e) => await this.displayItems();
     document.addEventListener("searchEvent", this.handleFilter);
@@ -86,7 +86,7 @@ export class Posts extends HTMLElement {
     this.shadowRoot.querySelector("app-filter").setAttribute("data-attributes", JSON.stringify(UIFilter));
   }
 
-  async loadPostTypes() {
+  async loadDropdown() {
     try {
       let dropdownItems = JSON.parse(localStorage.getItem("list_post_types"));
       if(dropdownItems && dropdownItems[0] && dropdownItems[0].name)
@@ -107,7 +107,7 @@ export class Posts extends HTMLElement {
     }
   }
 
-  async filterPosts(e) {
+  async filterItems(e) {
     const { id, value } = e.detail;
     if(value === '' || value === undefined)
       delete this.filter[id];

@@ -85,9 +85,7 @@ export class Select extends HTMLElement {
     this.itemSelectedEvent = this.getAttribute("data-item-selected-event");
     // Add event for items
     sroot.querySelectorAll(".btn-select").forEach((btn) => {
-      btn.addEventListener("click", (e) =>
-        this.itemSelected(e.target.innerText)
-      );
+      btn.addEventListener("click", (e) => this.itemSelected(e.target.innerText));
     });
   }
 
