@@ -3,12 +3,14 @@
 This project is intended to display both posts by users and posts' statistics.
 ## Purpose
 The purpose is to learn the following technologies: 
+- PocketBase.
 - Vite.
+- Plotly.
 - Web Components.
 - Constrctubile Style Sheets. 
 - JS Modules and JS Classes.
 ## Project
-- Technology: Vite + Constrctubile Style Sheets + Web Components.
+- Technology: PocketBase + Vite + Plotly + Web Components + Constrctubile Style Sheets.
 ## How To Run
 ### SPA
 1. Clone or download the repository.
