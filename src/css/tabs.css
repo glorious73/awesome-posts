@@ -1,0 +1,99 @@
+.tab-header {
+    display: flex;
+    flex-direction: row;
+    gap: 0 0.5rem;
+    font-weight: normal;
+    margin: 2rem;
+}
+.tab-header-back-btn {
+    color: var(--text-color);
+    cursor: pointer;
+}
+.tab-header-back-btn:hover,
+.tab-header-back-btn:hover * svg,
+.tab-header-back-btn:focus,
+.tab-header-back-btn:focus * svg {
+    color: var(--active-color);
+    fill: var(--active-color);
+    stroke: var(--active-color) !important;
+}
+
+.tab-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 0;
+    margin: 0.5rem 2rem 0 2rem;
+    padding: 0;
+}
+
+.tab-link {
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+    flex: 1 0;
+}
+
+.tab-link:hover,
+.tab-link.active:hover {
+    cursor: pointer;
+    background-color: var(--active-color);
+    border-bottom-color: var(--active-color);
+}
+.tab-link.active {
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+@media screen and (max-width: 1024px) {
+    .tab-links {
+        gap: 2rem 1.5rem;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0.5rem 0 2rem 0;
+        padding: 0;
+    }
+    .tab-link {
+        flex: 0 1 45%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .tab-links {
+        column-gap: 0;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0.5rem 0 2rem 0;
+        padding: 0;
+    }
+    .tab-link {
+        flex: 1 1 22%;    
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .tab-header {
+        gap: 0 1rem;
+    }
+    .tab-links {
+        gap: 2rem 0;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0 0 2rem 0;
+        padding: 0;
+    }
+    .tab-link {
+        flex: 0 1 88%;    
+    }
+}
