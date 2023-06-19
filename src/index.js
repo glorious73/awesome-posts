@@ -17,7 +17,7 @@ async function loadApp(isLoggedIn) {
 }
 
 async function loadIcons() {
-  const iconsSvg = await (await fetch("icons/bootstrap-icons.svg")).text();
+  const iconsSvg = await (await fetch("/icons/bootstrap-icons.svg")).text();
   const icons = new DOMParser().parseFromString(iconsSvg, "image/svg+xml");
   icons.documentElement.style.display = "none";
   window.Globals.icons = icons.documentElement;
