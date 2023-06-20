@@ -4,7 +4,7 @@ import './styles';
 import '@fontsource/oxygen';
 
 async function loadApp(isLoggedIn) {
-  window.Globals = { API_URL: 'http://localhost:8090', icons: ''};
+  window.Globals = { API_URL: 'http://localhost:5101', icons: ''};
   new Components().loadComponents();
   await loadIcons();
   loadContent();

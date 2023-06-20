@@ -22,7 +22,7 @@ class CRUDService {
             headers,
             jsonFormData
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     async editItem(apiEndpoint, itemId, editForm) {
@@ -36,7 +36,7 @@ class CRUDService {
             headers,
             jsonFormData
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     async getItemById(apiEndpoint, id) {
@@ -47,7 +47,7 @@ class CRUDService {
             `${Globals.API_URL}${apiEndpoint}/${id}`,
             headers
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     async getItems(apiEndpoint, query) {
@@ -75,7 +75,7 @@ class CRUDService {
             headers,
             query
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     async deleteItem(apiEndpoint, itemId) {
@@ -86,7 +86,7 @@ class CRUDService {
             `${Globals.API_URL}${apiEndpoint}/${itemId}`,
             headers
         );
-        this._returnResult(response);
+        return this._returnResult(response);
     }
 
     _buildFormHeaders() {
@@ -95,9 +95,8 @@ class CRUDService {
     }
 
     _returnResult(response) {
-        /* if (response.success) return response.result;
-           else throw new Error(`${response.result.message}`); */
-        return response;
+        if (response.success) return response.result;
+           else throw new Error(`${response.result.message}`);
     }
 }
 

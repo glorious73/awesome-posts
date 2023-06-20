@@ -22,13 +22,14 @@ class AuthService {
         const headers = formService.buildHeaders();
         // Execute request
         const response = await apiService.POST(
-            `${Globals.API_URL}/api/collections/users/auth-with-password`,
+            `${Globals.API_URL}/api/auth/login`,
             headers,
             jsonFormData
         );
-        if (response.record)
-            return (response.record);
-        throw new Error("Username or Password is incorrect.");
+        if (response.success) 
+            return response.result.user;
+        else 
+            throw new Error(`${(response.result) ? response.result.message : 'An error occured.'}`);
     }
 
     logout() {
@@ -66,9 +67,8 @@ class AuthService {
             headers,
             jsonFormData
         );
-        /* if (response.success) return response.result;
-        else throw new Error(`${response.result.message}`); */
-        return response;
+        if (response.success) return response.result;
+        else throw new Error(`${response.result.message}`);
     }
 
     async resetPassword(resetPasswordForm) {
@@ -81,9 +81,8 @@ class AuthService {
           headers,
           jsonFormData
         );
-        /* if (response.success) return response.result;
-        else throw new Error(`${response.result.message}`); */
-        return response;
+        if (response.success) return response.result;
+        else throw new Error(`${response.result.message}`);
       }    
 }
 
