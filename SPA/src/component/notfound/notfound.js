@@ -5,10 +5,12 @@ function renderTemplate() {
 
   template.innerHTML = /*html*/ `
         <div class="container">
-            <div class="card section">
+            <div class="section">
                 <div class="entry">
-                    <h1>Page not found</h1>
-                    <app-button data-classes="btn btn-secondary btn-settings" id="btnHome">
+                    <h1>404</h1>
+                    <h2>Page not found</h2>
+                    <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                    <app-button data-classes="btn btn-primary btn-settings" id="btnHome">
                         <span slot="text">
                             <svg class="icon-entry" viewBox="-0.5 -0.5 16.9 16.9">
                                 ${Globals.icons.querySelector(`#house`).innerHTML}
