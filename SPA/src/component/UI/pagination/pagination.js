@@ -71,8 +71,8 @@ export class Pagination extends HTMLElement {
   }
 
   assignAttributes(data) {
-    this.pageNumber = data.page;
-    this.pageSize   = data.perPage;
+    this.pageNumber = data.pageNumber;
+    this.pageSize   = data.pageSize;
     this.totalPages = data.totalPages;
     this.totalItems = data.totalItems;
   }

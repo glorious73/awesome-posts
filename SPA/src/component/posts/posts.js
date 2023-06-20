@@ -54,12 +54,12 @@ export class Posts extends HTMLElement {
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
     document.removeEventListener("deletedEvent", this.handleDeleteEvent);
     // cache
-    localStorage.setItem("filter_posts", JSON.stringify(this.filter));
-    localStorage.setItem("list_post_types", JSON.stringify(this.postTypes));
+    localStorage.setItem("filter.posts", JSON.stringify(this.filter));
+    localStorage.setItem("list.post_types", JSON.stringify(this.postTypes));
   }
 
   async loadFilter() {
-    let filter = await JSON.parse(localStorage.getItem("filter_posts") || "{}");
+    let filter = await JSON.parse(localStorage.getItem("filter.posts") || "{}");
     if(!filter.page) {
       const now     = new Date();
       const nowDate = now.toISOString().split("T")[0];
@@ -88,7 +88,7 @@ export class Posts extends HTMLElement {
 
   async loadDropdown() {
     try {
-      let dropdownItems = JSON.parse(localStorage.getItem("list_post_types"));
+      let dropdownItems = JSON.parse(localStorage.getItem("list.post_types"));
       if(dropdownItems && dropdownItems[0] && dropdownItems[0].name)
         await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
       else {
