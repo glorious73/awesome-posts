@@ -3,14 +3,12 @@
 This project is intended to display both posts by users and posts' statistics.
 ## Purpose
 The purpose is to learn the following technologies: 
-- PocketBase.
 - Vite.
 - Plotly.
 - Web Components.
-- Constrctubile Style Sheets. 
 - JS Modules and JS Classes.
 ## Project
-- Technology: PocketBase + Vite + Plotly + Web Components + Constrctubile Style Sheets.
+- Technology: Vite + Plotly + Web Components.
 ## How To Run
 ### SPA
 1. Clone or download the repository.
@@ -19,10 +17,9 @@ The purpose is to learn the following technologies:
 4. Once everything is installed, run the command `npm run dev`.
 5. Done. The app should open in `http://localhost:5173`.
 ### API
-1. Install PocketBase on your PC.
-2. Navigate to `API` directory.
-3. Run `./pocketbase serve`.
-4. The admin interface could be opened in `http://localhost:8090/_/`.
+1. Get the API from the developer to be used (PocketBase not used as of now).
+2. Or adjust to use your API.
+3. Will share the API docs soon.
 
 
 ## Usage
