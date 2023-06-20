@@ -103,8 +103,8 @@
 .input-select-secondary {
     border: 1px solid var(--secondary-color) !important;
 }
-.input-select-silver {
-    border: 1px solid var(--silver-color) !important;
+.input-select-accent {
+    border: 1.5px solid var(--accent-color) !important;
 }
 
 .btn-select {

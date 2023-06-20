@@ -8,7 +8,6 @@
 .form-flex {
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: 2rem;
 }
 .form-inline {
@@ -90,14 +89,26 @@
 }
 .form-flex-row input,
 .form-flex-row button,
+.form-flex-row app-button,
 .form-flex-row app-select,
 .form-flex-row app-file,  
 .form-flex-row textarea,
 .form-flex-row div {
     flex: 1 1 0;
+    margin: 0;
+    padding: 0;
 }
 /*-- /form row --*/
 
+.icon-form-back {
+    width: 2.5rem;
+    height: 2.5rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 0.6px;
+    vertical-align: bottom;
+}
 
 @media screen and (max-width: 1024px) {
     .form-container {
@@ -130,6 +141,7 @@
     }
     .form-flex-row input,
     .form-flex-row button,
+    .form-flex-row app-button,
     .form-flex-row app-select,
     .form-flex-row app-file,
     .form-flex-row div {
@@ -152,9 +164,6 @@
         width: 100% !important;
         height: 3rem !important;
         padding: 3rem 0;
-    }
-    .form-flex-row button {
-        padding: 0.5rem 0;
     }
 }
 

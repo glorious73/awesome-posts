@@ -9,7 +9,7 @@ function renderTemplate() {
         <div class="filter">
             <div class="filter-item filter-actions">
                 <input type="text" class="input-search" id="search">
-                <app-select id="dropdown" data-theme="secondary" data-is-border="true" data-option="name" data-value="code" data-items-event="filterDropdownEvent" data-item-selected-event="selectedItemEvent">
+                <app-select id="dropdown" data-theme="secondary" data-option="name" data-value="code" data-items-event="filterDropdownEvent" data-item-selected-event="selectedItemEvent">
                 </app-select>
                 <app-date-picker style="display:none;"></app-date-picker>
             </div>

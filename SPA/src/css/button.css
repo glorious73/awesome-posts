@@ -1,35 +1,3 @@
-.btn-form {
-    width: 100%;
-    margin: 1rem auto 0 auto;
-    padding: 0.6rem 0.6rem;
-    font-size: 1.3rem;
-}
-.btn-form-flex {
-    width: 100%;
-    height: 2.5rem;
-    font-size: 1.2rem;
-}
-.btn-form-border {
-    border-radius: 0.8rem;
-}
-
-.btn-submit {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    border: 1px solid var(--secondary-color);
-}
-.btn-submit:hover {
-    /* background-color: var(--active-color);
-    border: 1px solid var(--active-color); */
-    cursor: pointer;
-}
-.btn-submit:disabled {
-    opacity: 0.6;
-}
-.btn-submit:disabled:hover {
-    cursor: progress;
-}
-
 .btn-cancel {
     background-color: var(--error-color);
     color: var(--primary-color);

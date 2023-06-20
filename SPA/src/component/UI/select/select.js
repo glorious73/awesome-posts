@@ -61,10 +61,6 @@ export class Select extends HTMLElement {
     const theme = this.getAttribute("data-theme");
     if(theme)
       input.classList.add(`input-select-${theme}`);
-    // Border
-    const isSelectBorder = this.getAttribute("data-is-border");
-    if (isSelectBorder == "true")
-      input.classList.add(`input-text-border`);
     // Event for select
     this.isToggled = false;
     // Load items

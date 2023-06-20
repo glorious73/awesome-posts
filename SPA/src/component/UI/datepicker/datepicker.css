@@ -8,6 +8,7 @@
 .input-date {
     font-weight: 500;
     background-color: var(--primary-color);
+    color: var(--text-color);
     border: 1px solid var(--secondary-color);
     border-radius: 0.8rem;
     width: 100%;
