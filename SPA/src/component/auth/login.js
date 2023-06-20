@@ -13,8 +13,8 @@ function renderTemplate() {
         <h4 class="auth-subtitle">Login to proceed to the Awesome Posts Dashboard.</h4>
         <form action="" id="loginForm">
             <div class="form-row">
-                <label for="identity">Username/Email address</label>
-                <input type="text" class="input-text" id="identity" name="identity" required>
+                <label for="username">Username/Email address</label>
+                <input type="text" class="input-text" id="username" name="username" required>
             </div>
             <div class="form-row">
                 <label for="password">Password</label>
@@ -62,9 +62,9 @@ export class Login extends HTMLElement {
     const form = sroot.querySelector("#loginForm");
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        await this.login(e);
+        await this.login(e.target);
     });
-    sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => await this.login(new FormData(form)));
+    sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => await this.login(form));
     sroot.querySelector("#btnForgot").addEventListener("click", (e) => { 
       this.shadowRoot.getRootNode().innerHTML = "<app-forgot-password></app-forgot-password>";
       history.pushState({ component: "app-forgot-password" }, null,`/password/forgot`);
@@ -75,11 +75,11 @@ export class Login extends HTMLElement {
 
   }
 
-  async login(e) {
+  async login(form) {
     const button = this.shadowRoot.querySelector("#btnSubmit");
     try {
       button.setAttribute("data-is-loading", true);
-      const user = await authService.login(e.target);
+      const user = await authService.login(form);
       this.postLogin(user);
     } 
     catch (err) {
