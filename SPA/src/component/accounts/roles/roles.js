@@ -9,7 +9,7 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
         <div class="container">
             <h1 class="title">Roles</h1>
-            <app-filter data-search-id="name" data-search-placeholder="Name" data-is-add="true" data-add-path="/roles/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
+            <app-filter data-search-id="name" data-search-placeholder="Name" data-is-add="false" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
             <app-table class="m-table" data-theme="secondary"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
@@ -52,11 +52,11 @@ export class Roles extends HTMLElement {
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
     document.removeEventListener("deletedEvent", this.handleDeleteEvent);
     // cache
-    localStorage.setItem("filter_roles", JSON.stringify(this.filter));
+    localStorage.setItem("filter.roles", JSON.stringify(this.filter));
   }
 
   async loadFilter() {
-    let filter = await JSON.parse(localStorage.getItem("filter_roles") || "{}");
+    let filter = await JSON.parse(localStorage.getItem("filter.roles") || "{}");
     if(!filter.page) {
       const now     = new Date();
       const nowDate = now.toISOString().split("T")[0];
@@ -97,9 +97,9 @@ export class Roles extends HTMLElement {
       const table      = this.shadowRoot.querySelector("app-table");
       const pagination = this.shadowRoot.querySelector("app-pagination");
       table.setAttribute("data-is-loading", true);
-      const result = await crudService.getItems("/api/collections/roles/records", this.filter);
+      const result = await crudService.getItems("/api/role", this.filter);
       table.setAttribute("data-is-loading", false);
-      table.setAttribute("data-items", JSON.stringify({items: result.items, hiddenFields: this.hiddenFields}));
+      table.setAttribute("data-items", JSON.stringify({items: result.roles, hiddenFields: this.hiddenFields}));
       pagination.setAttribute("data-pagination", JSON.stringify(result));
     } 
     catch (err) {

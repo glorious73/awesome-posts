@@ -9,7 +9,7 @@ function renderTemplate() {
   template.innerHTML = /*html*/ `
         <div class="container">
             <h1 class="title">Users</h1>
-            <app-filter data-search-id="name" data-search-placeholder="Name" data-is-dropdown="true" data-is-add="true" data-add-path="/users/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
+            <app-filter data-search-id="username" data-search-placeholder="Username" data-is-dropdown="true" data-is-add="true" data-add-path="/users/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
             <app-table class="m-table" data-theme="secondary"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
@@ -54,19 +54,18 @@ export class Users extends HTMLElement {
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
     document.removeEventListener("deletedEvent", this.handleDeleteEvent);
     // cache
-    localStorage.setItem("filter_users", JSON.stringify(this.filter));
-    localStorage.setItem("list_roles", JSON.stringify(this.roles));
+    localStorage.setItem("filter.users", JSON.stringify(this.filter));
+    localStorage.setItem("list.roles", JSON.stringify(this.roles));
   }
 
   async loadFilter() {
-    let filter = await JSON.parse(localStorage.getItem("filter_users") || "{}");
+    let filter = await JSON.parse(localStorage.getItem("filter.users") || "{}");
     if(!filter.page) {
       const now     = new Date();
       const nowDate = now.toISOString().split("T")[0];
       filter = { 
-        page: 1, 
-        perPage: 20,
-        sort: "-created",
+        pageNumber: 1, 
+        pageSize: 20,
         createdStart: `${nowDate} ${now.getHours()-1}:${now.getMinutes()}`, 
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
       };
@@ -78,8 +77,8 @@ export class Users extends HTMLElement {
 
   loadFilterUI(filter) {
     const UIFilter = {
-      search: filter.name || '',
-      select: filter.role || 'role',
+      search: filter.username || '',
+      select: filter.role || 'Role',
       dateBegin: filter.createdStart,
       dateEnd: filter.createdEnd
     };
@@ -88,12 +87,14 @@ export class Users extends HTMLElement {
 
   async loadDropdown() {
     try {
-      let dropdownItems = JSON.parse(localStorage.getItem("list_roles"));
+      let dropdownItems = JSON.parse(localStorage.getItem("list.roles"));
       if(dropdownItems && dropdownItems[0] && dropdownItems[0].name)
         await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
       else {
-        dropdownItems = [{code: "role", name: "Role"}, {code: "admin", name: "Admin"}, {code: "user", name: "User"}];
-        // then call API to fetch list
+        dropdownItems = [{code: 0, name: "Role"}];
+        const { roles } = await crudService.getItems("/api/role", null);
+        for(const role of roles)
+          dropdownItems.push({code: role.code, name: role.name});
       }
       document.dispatchEvent(
         new CustomEvent("filterDropdownEvent", {
@@ -118,9 +119,9 @@ export class Users extends HTMLElement {
 
   async filterDropdown(e) {
     if(e.detail.code == 0)
-      delete this.filter.type;
+      delete this.filter.role;
     else
-      this.filter.type = e.detail.code;
+      this.filter.role = e.detail.code;
     await this.displayItems();
   }
 
@@ -129,9 +130,9 @@ export class Users extends HTMLElement {
       const table      = this.shadowRoot.querySelector("app-table");
       const pagination = this.shadowRoot.querySelector("app-pagination");
       table.setAttribute("data-is-loading", true);
-      const result = await crudService.getItems("/api/collections/users/records", this.filter);
+      const result = await crudService.getItems("/api/account", this.filter);
       table.setAttribute("data-is-loading", false);
-      table.setAttribute("data-items", JSON.stringify({items: result.items, hiddenFields: this.hiddenFields}));
+      table.setAttribute("data-items", JSON.stringify({items: result.users, hiddenFields: this.hiddenFields}));
       pagination.setAttribute("data-pagination", JSON.stringify(result));
     } 
     catch (err) {
