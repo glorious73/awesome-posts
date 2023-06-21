@@ -17,7 +17,7 @@ function renderTemplate() {
                         ${Globals.icons.querySelector(`#arrow-left-circle`).innerHTML}
                     </svg>
                   </a>
-                  <h1 class="form-title">ADD USER</h1>
+                  <h1 class="form-title">EDIT USER</h1>
               </div>
               <form action="" id="userForm"></form>
               <div class="mt-1">
@@ -42,25 +42,17 @@ function renderTemplate() {
                       <label for="emailAddress">Email Address</label>
                       <input type="email" class="input-text-form-flex" id="emailAddress" name="emailAddress" form="userForm" required>
                   </div>
-                  <h2 class="form-flex-row-title">Credentials</h2>
+                  <h2 class="form-flex-row-title">Status</h2>
                   <div class="form-flex-row">
-                      <label for="username">Username</label>
-                      <input type="text" class="input-text-form-flex" id="username" name="username" form="userForm" required>
-                  </div>
-                  <div class="form-flex-row">
-                      <label for="password">Password</label>
-                      <div class="input-password-hide-show">
-                        <input type="password" class="input-text-form-flex input-flex-password" id="password" name="password" form="userForm" required>
-                          <svg class="icon-password" id="passwordToggle" viewBox="-0.5 -0.5 16.9 16.9">
-                                ${Globals.icons.querySelector(`#eye`).innerHTML}
-                          </svg>
-                      </div>
+                      <label for="isEnabled">Is Enabled</label>
+                      <app-switch id="isEnabled" name="isEnabled" data-is-checked="false" form="userForm">
+                      </app-switch>
                   </div>
                   <div class="form-flex-row">
                       <label></label>
                       <button type="submit" form="userForm" style="display:none;">submit</button>
                       <app-button data-classes="btn btn-secondary btn-form-flex" id="btnSubmit">
-                        <span slot="text">Add</span>
+                        <span slot="text">Edit</span>
                       </app-button>
                   </div>
               </div>
@@ -70,7 +62,7 @@ function renderTemplate() {
   return template;
 }
 
-export class UserForm extends HTMLElement {
+export class UserEdit extends HTMLElement {
   constructor() {
     super();
 
@@ -80,7 +72,7 @@ export class UserForm extends HTMLElement {
     
     const stylesheet = new CSSStyleSheet();
     const inputsheet = new CSSStyleSheet();
-    const formsheet  = new CSSStyleSheet();
+    const formsheet = new CSSStyleSheet();
     stylesheet.replace(styles);
     inputsheet.replace(input);
     formsheet.replace(form);
@@ -89,9 +81,15 @@ export class UserForm extends HTMLElement {
 
   async connectedCallback() {
     const sroot = this.shadowRoot;
+    const match = JSON.parse(this.getAttribute("data-match"));
+    // back button
     sroot.querySelector("#btnBack").addEventListener("click", (e) => document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "accounts"}})));
-    sroot.querySelector("#passwordToggle").addEventListener("click", (e) => this.togglePassword(e));
-    await this.loadRoles();
+    // UI
+    uiService.dataBindElements(this, "input&--&value");
+    // User
+    this.id = match.data.id;
+    const user = await this.loadUser();
+    await this.loadRoles(user.role);
     const form = sroot.querySelector("#userForm");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -106,12 +104,27 @@ export class UserForm extends HTMLElement {
     
   }
 
+  async loadUser() {
+    try {
+        let user = JSON.parse(localStorage.getItem("userItem"));
+        if(!user || (user.id != this.id))
+            user = (await crudService.getItemById("/api/account",this.id)).user;
+        for (const [key, value] of Object.entries(user))
+            if (this[key] && this[key].change) this[key].change(value);
+        this.shadowRoot.querySelector('#isEnabled').setAttribute("data-is-checked", user.isEnabled);
+        return user;
+    } 
+    catch (err) {
+        uiService.showAlert("Error", err.message);
+    }
+  }
+
   async submitForm(form) {
     const btnSubmit = this.shadowRoot.querySelector("#btnSubmit");
     try {
         btnSubmit.setAttribute("data-is-loading", true);
-        const { user } = await crudService.addItem("/api/account", form);
-        uiService.showAlert("Success", `${user.name}'s account was created successfully.`);
+        const { user } = await crudService.editItem("/api/account", this.id, form);
+        uiService.showAlert("Success", `${user.name}'s account was edited successfully.`);
         document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "accounts" } }));
     } 
     catch (err) {
@@ -122,22 +135,16 @@ export class UserForm extends HTMLElement {
     }
   }
 
-  async loadRoles() {
+  async loadRoles(role) {
     try {
       const { roles } = await crudService.getItems("/api/role", null);
       document.dispatchEvent(
         new CustomEvent("rolesDropdownEvent", {
-          detail: { items: roles },
+          detail: { items: roles, selectedItem: role },
         })
       );
     } catch (err) {
         uiService.showAlert("Error", err.message);
     }
-  }
-
-  togglePassword(e) {
-    const password = this.shadowRoot.querySelector("#password");
-    password.setAttribute("type", (password.type == "password") ? "text" : "password");
-    e.target.setAttribute("data-icon", (e.target.getAttribute("data-icon") == "eye") ? "eye-slash" : "eye"); 
   }
 }

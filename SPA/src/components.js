@@ -9,6 +9,7 @@ import { About } from "./component/about/about";
 import { Accounts } from "./component/accounts/accounts";
 import { Users } from "./component/accounts/users/users";
 import { UserForm } from "./component/accounts/users/userform";
+import { UserEdit } from "./component/accounts/users/useredit";
 import { Roles } from "./component/accounts/roles/roles";
 import { Settings } from "./component/settings/settings";
 // UI
@@ -42,6 +43,7 @@ export class Components {
         customElements.define('app-accounts', Accounts);
         customElements.define('app-users', Users);
         customElements.define('app-user-form', UserForm);
+        customElements.define('app-user-edit', UserEdit);
         customElements.define('app-roles', Roles);
         customElements.define('app-settings', Settings);
         // UI

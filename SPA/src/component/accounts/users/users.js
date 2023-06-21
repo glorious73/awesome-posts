@@ -11,7 +11,7 @@ function renderTemplate() {
             <h1 class="title">Users</h1>
             <app-filter data-search-id="username" data-search-placeholder="Username" data-is-dropdown="true" data-is-add="true" data-add-path="/users/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
-            <app-table class="m-table" data-theme="secondary"></app-table>
+            <app-table class="m-table" data-theme="secondary" data-item-name="userItem" data-actions="edit" data-actions-path="users"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
             </app-pagination>
         </div>
@@ -33,7 +33,7 @@ export class Users extends HTMLElement {
   }
 
   async connectedCallback() {
-    this.hiddenFields = "id";
+    this.hiddenFields = "id,firstName,lastName";
     // dropdown
     this.roles = await this.loadDropdown();
     // component
