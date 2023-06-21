@@ -47,6 +47,8 @@ export class Table extends HTMLElement {
     const tableElement = this.shadowRoot.querySelector(".table");
     const tableTheme = this.getAttribute("data-theme");
     tableElement.classList.add(`table-${tableTheme || "primary"}`);
+    // Item
+    this.itemName = this.getAttribute("data-item-name") || "item";
     // Actions
     const actions = this.getAttribute("data-actions");
     this.isActionable = actions != null && actions != undefined;
@@ -80,17 +82,17 @@ export class Table extends HTMLElement {
   }
 
   populateTable(data) {
+    this.items = data.items;
     if (!this.hiddenFields)
       this.hiddenFields = data.hiddenFields ? data.hiddenFields.split(",") : "";
     this.toggleElement("#noData", false);
-    this.populateHeader(data);
-    this.populateBody(data);
+    this.populateHeader();
+    this.populateBody();
     this.addActionEvents();
   }
 
   populateHeader(data) {
-    const { items } = data;
-    const headers = Object.keys(items[0]);
+    const headers = Object.keys(this.items[0]);
     const thead = this.shadowRoot.querySelector("#tableHead");
     let tableHead = "<tr>";
     for (const header of headers)
@@ -104,9 +106,8 @@ export class Table extends HTMLElement {
 
   populateBody(data) {
     const tbody = this.shadowRoot.querySelector("#tableBody");
-    const { items } = data;
     let tableBody = "";
-    for (const item of items) {
+    for (const item of this.items) {
       tableBody += '<tr class="table-tr">';
       for (const [key, value] of Object.entries(item))
         tableBody += !this.hiddenFields.includes(key)
@@ -142,13 +143,13 @@ export class Table extends HTMLElement {
       this.shadowRoot
         .querySelectorAll(".table-view-action")
         .forEach((element) => {
-          element.addEventListener("click", (e) => this.viewItem(e));
+          element.addEventListener("click", (e) => this.navigateItem(e, ""));
         });
     if (this.isEditAction)
       this.shadowRoot
         .querySelectorAll(".table-edit-action")
         .forEach((element) => {
-          element.addEventListener("click", (e) => this.editItem(e));
+          element.addEventListener("click", (e) => this.navigateItem(e, "/edit"));
         });
     if (this.isDeleteAction)
       this.shadowRoot
@@ -158,16 +159,12 @@ export class Table extends HTMLElement {
         });
   }
 
-  viewItem(e) {
-    const viewLink = this.getAttribute("data-view-path");
+  navigateItem(e, link) {
+    const navigateLink = this.getAttribute("data-actions-path");
     const id = e.target.id.split("-")[1] || e.target.parentElement.id.split("-")[1];
-    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${viewLink}/${id}` } }));
-  }
-
-  editItem(e) {
-    const editLink = this.getAttribute("data-edit-path");
-    const id = e.target.id.split("-")[1] || e.target.parentElement.id.split("-")[1];
-    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${editLink}/${id}` } }));
+    const item = this.items.find(item => item.id == id);
+    localStorage.setItem(this.itemName, JSON.stringify(item));
+    document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "route", route: `/${navigateLink}/${id}${link}` } }));
   }
 
   deleteItem(e) {
