@@ -42,8 +42,8 @@ function loadEvents() {
     sidebar.className = (e.detail.isDisplayed) ? "sidebar sidebar-slide" : "sidebar d-none";
     const result      = sidebar.filterItemsForRole();
   });
-  document.addEventListener("UnauthorizedEvent", () => showALert("401 Unauthorized."));
-  document.addEventListener("ForbiddenEvent", () => showAlert("403 Forbidden."));
+  document.addEventListener("UnauthorizedEvent", () => setTimeout(() => logoutUnauthorized(), 1111));
+  document.addEventListener("ForbiddenEvent", () => showAlert("Forbidden."));
   document.addEventListener('NavigateEvent', (e) => {
     if(e.detail.type === "name")
       app.router.navigateByName(e.detail.name);
@@ -51,6 +51,13 @@ function loadEvents() {
       app.router.navigate(e.detail.route);
   });
   document.addEventListener("ResponsiveSidebarEvent", () => document.querySelector(".sidebar").classList.toggle("show"));
+}
+
+function logoutUnauthorized() {
+  showAlert("You have been logged out. Please login.");
+  localStorage.clear();
+  document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "login" } }));
+  
 }
 
 function showAlert(message) {

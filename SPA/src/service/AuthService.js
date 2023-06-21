@@ -4,9 +4,7 @@ import uiService from "./UIService";
 
 
 class AuthService {
-    constructor() {
-        this.isLoggedOutAlert = false;
-    }
+    constructor() { }
 
     static getInstance() {
         if (!this.instance) {
@@ -40,21 +38,6 @@ class AuthService {
     isLoggedIn() {
         const user = localStorage.getItem("user");
         return user == undefined || user == null;
-    }
-
-    logoutUnauthorizedUser(e) {
-        if (!this.isLoggedOutAlert) {
-            this.isLoggedOutAlert = true;
-            uiService.showAlert("Information", "You have been signed out. Please sign back in.");
-        }
-        setTimeout(() => {
-            this.logout();
-            this.isLoggedOutAlert = false;
-        }, 1111);
-    }
-
-    notifyForbiddenUser(e) {
-        uiService.showAlert("Information", "403 Forbidden.");
     }
 
     async sendResetPasswordEmail(forgotPasswordForm) {
