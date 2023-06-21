@@ -35,7 +35,10 @@ class App {
 
     loadComponent(match, componentHTML) {
         const app = document.querySelector('#app');
-        app.innerHTML = componentHTML;
+        const componentMatch = `
+            ${componentHTML.split("><")[0]} data-match='${JSON.stringify(match)}'><${componentHTML.split("><")[1]}
+        `;
+        app.innerHTML = componentMatch;
     }
 }
 
