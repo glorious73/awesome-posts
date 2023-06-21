@@ -1,3 +1,5 @@
+import { DataBoundElement } from "../config/DataBoundElement";
+
 class UIService {
     constructor() { }
 
