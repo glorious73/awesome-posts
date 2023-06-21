@@ -15,9 +15,9 @@ class AuthService {
 
     async login(loginForm) {
         // build request
-        const jsonFormData = formService.buildJsonFormData(loginForm);
-        jsonFormData.email = jsonFormData.username; // backend accepts username and email
-        const headers = formService.buildHeaders();
+        const jsonFormData        = formService.buildJsonFormData(loginForm);
+        jsonFormData.emailAddress = jsonFormData.username; // backend accepts username and email
+        const headers             = formService.buildHeaders();
         // Execute request
         const response = await apiService.POST(
             `${Globals.API_URL}/api/auth/login`,

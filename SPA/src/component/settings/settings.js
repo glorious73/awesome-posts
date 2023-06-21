@@ -61,7 +61,7 @@ function renderTemplate() {
                 </div>
                 <div class="entry">
                     <h2 class="key">Email Address</h2>
-                    <h2 class="profileItem" id="email"></h2>
+                    <h2 class="profileItem" id="emailAddress"></h2>
                 </div>
                 <div class="entry">
                     <h2 class="key">Logout</h2>
