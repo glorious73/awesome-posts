@@ -49,8 +49,7 @@ export class Alert extends HTMLElement {
       const sroot = this.shadowRoot;
       const status = this.getAttribute("data-status");
       sroot.querySelector("#status").innerHTML = status;
-      sroot.querySelector("#message").innerHTML =
-        this.getAttribute("data-message");
+      sroot.querySelector("#message").innerHTML = this.getAttribute("data-message");
       this.setIcon(status);
       // Show
       const toaster = sroot.querySelector("#toaster");
@@ -70,7 +69,7 @@ export class Alert extends HTMLElement {
       let fill = "";
       switch (status) {
         case "Success":
-          icon = "check2-circle-fill";
+          icon = "check-circle-fill";
           fill = "fill-success";
           break;
         case "Error":
