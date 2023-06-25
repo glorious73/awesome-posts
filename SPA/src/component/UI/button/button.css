@@ -46,6 +46,16 @@
     border: 1px solid var(--error-color);
     color: var(--primary-color);
 }
+.btn-cancel {
+    background-color: var(--primary-color);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+}
+.btn-cancel:hover {
+    background-color: var(--error-color);
+    border: 1px solid var(--error-color);
+    color: var(--primary-color);
+}
 
 .btn-filter {
     display: flex;
