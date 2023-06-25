@@ -2,7 +2,9 @@ import formService from "./FormService";
 import apiService from "./APIService";
 
 class CRUDService {
-    constructor() { }
+    constructor() { 
+        this.user = {};
+    }
 
     static getInstance() {
         if (!this.instance) {
@@ -43,10 +45,7 @@ class CRUDService {
         // build request
         const headers = this._buildFormHeaders();
         // Execute request
-        const response = await apiService.GET(
-            `${Globals.API_URL}${apiEndpoint}/${id}`,
-            headers
-        );
+        const response = await apiService.GET(`${Globals.API_URL}${apiEndpoint}/${id}`, headers);
         return this._returnResult(response);
     }
 
@@ -90,8 +89,9 @@ class CRUDService {
     }
 
     _buildFormHeaders() {
-        const currentUser = JSON.parse(localStorage.getItem("user") || `{"token":"TOKEN_MISSING"}`);
-        return formService.buildHeaders(currentUser.token);
+        if(!this.user.token)
+            this.user = JSON.parse(localStorage.getItem("user") || "{}");
+        return formService.buildHeaders(this.user.token);
     }
 
     _returnResult(response) {

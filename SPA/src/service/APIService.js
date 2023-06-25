@@ -14,9 +14,6 @@ class APIService {
     }
 
     async GET(fetchLink, headers, query = null) {
-        if (!fetchLink || !headers) {
-            throw new Error("One or more GET request parameters was not passed.");
-        }
         try {
             const url = new URL(fetchLink);
             if (query) url.search = new URLSearchParams(query).toString();
@@ -32,9 +29,6 @@ class APIService {
     }
 
     async POST(fetchLink, headers, body) {
-        if (!fetchLink || !headers || !body) {
-            throw new Error("One or more POST request parameters was not passed.");
-        }
         try {
             const rawResponse = await fetch(fetchLink, {
                 method: "POST",
@@ -49,9 +43,6 @@ class APIService {
     }
 
     async PUT(fetchLink, headers, body) {
-        if (!fetchLink || !headers || !body) {
-            throw new Error("One or more PUT request parameters was not passed.");
-        }
         try {
             const rawResponse = await fetch(fetchLink, {
                 method: "PUT",
@@ -66,9 +57,6 @@ class APIService {
     }
 
     async DELETE(fetchLink, headers) {
-        if (!fetchLink || !headers) {
-            throw new Error("One or more DELETE request parameters was not passed.");
-        }
         try {
             const rawResponse = await fetch(fetchLink, {
                 method: "DELETE",
