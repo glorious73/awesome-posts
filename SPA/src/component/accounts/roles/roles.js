@@ -26,7 +26,7 @@ export class Roles extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
     const template = renderTemplate();
     shadow.appendChild(template.content.cloneNode(true));
-    
+
     const stylesheet = new CSSStyleSheet();
     stylesheet.replace(styles);
     shadow.adoptedStyleSheets = [stylesheet];
@@ -38,36 +38,36 @@ export class Roles extends HTMLElement {
     this.filter = await this.loadFilter();
     await this.displayItems();
     // events
-    this.handleFilter       = (e) => this.filterItems(e);
+    this.handleFilter = (e) => this.filterItems(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
-    this.handleDeleteEvent  = async (e) => await this.displayItems();
+    this.handleExport = (e) => this.exportItems();
     document.addEventListener("searchEvent", this.handleFilter);
+    document.addEventListener("exportEvent", this.handleExport);
     document.addEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.addEventListener("deletedEvent", this.handleDeleteEvent);
   }
 
   disconnectedCallback() {
     // events
     document.removeEventListener("searchEvent", this.handleFilter);
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.removeEventListener("deletedEvent", this.handleDeleteEvent);
+    document.removeEventListener("exportEvent", this.handleExport);
     // cache
     localStorage.setItem("filter.roles", JSON.stringify(this.filter));
   }
 
   async loadFilter() {
     let filter = await JSON.parse(localStorage.getItem("filter.roles") || "{}");
-    if(!filter.page) {
-      const now     = new Date();
+    if (!filter.page) {
+      const now = new Date();
       const nowDate = now.toISOString().split("T")[0];
-      filter = { 
-        page: 1, 
+      filter = {
+        page: 1,
         perPage: 20,
         sort: "-created",
-        createdStart: `${nowDate} ${now.getHours()-1}:${now.getMinutes()}`, 
-        createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
+        createdStart: `${nowDate} ${now.getHours() - 1}:${now.getMinutes()}`,
+        createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}`
       };
-    } 
+    }
     else
       this.loadFilterUI(filter);
     return filter;
@@ -85,7 +85,7 @@ export class Roles extends HTMLElement {
 
   async filterItems(e) {
     const { id, value } = e.detail;
-    if(value === '' || value === undefined)
+    if (value === '' || value === undefined)
       delete this.filter[id];
     else
       this.filter[id] = value;
@@ -94,16 +94,40 @@ export class Roles extends HTMLElement {
 
   async displayItems() {
     try {
-      const table      = this.shadowRoot.querySelector("app-table");
+      const table = this.shadowRoot.querySelector("app-table");
       const pagination = this.shadowRoot.querySelector("app-pagination");
       table.setAttribute("data-is-loading", true);
       const result = await crudService.getItems("/api/role", this.filter);
       table.setAttribute("data-is-loading", false);
-      table.setAttribute("data-items", JSON.stringify({items: result.roles, hiddenFields: this.hiddenFields}));
+      table.setAttribute("data-items", JSON.stringify({ items: result.roles, hiddenFields: this.hiddenFields }));
       pagination.setAttribute("data-pagination", JSON.stringify(result));
-    } 
+    }
     catch (err) {
       uiService.showAlert("Error", err.message);
+    }
+  }
+
+  async exportItems() {
+    try {
+      // setup
+      const now = new Date();
+      // call
+      const result = await crudService.exportItems(
+        '/api/role',
+        50,
+        'roles',
+        `roles ${now.toISOString().split("T")[0]} ${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`,
+        this.filter,
+        this.hiddenFields
+      );
+      if (result < 0)
+        this.uiService.showAlert("Information", "No items to export.");
+    }
+    catch (err) {
+      uiService.showAlert("Error", err.message);
+    }
+    finally {
+      this.shadowRoot.querySelector("app-filter").setAttribute("data-export-done", "");
     }
   }
 }

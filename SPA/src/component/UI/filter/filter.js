@@ -50,7 +50,7 @@ export class Filter extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["data-attributes", "data-is-dropdown"];
+    return ["data-attributes", "data-is-dropdown", "data-export-done"];
   }
 
   connectedCallback() {
@@ -71,6 +71,8 @@ export class Filter extends HTMLElement {
       this.loadAttributes(newValue);
     if(name === "data-is-dropdown")
       this.shadowRoot.querySelector("#dropdown").style.display = (newValue == "true") ? "" : "none";
+    if(name === "data-export-done")
+      this.shadowRoot.querySelector("#export").setAttribute("data-is-loading", false);
   }
 
   loadSearch(search) {
@@ -106,7 +108,7 @@ export class Filter extends HTMLElement {
   }
 
   loadAdd(button) {
-    const isAdd  = this.getAttribute("data-is-add") == "true";
+    const isAdd  = this.getAttribute("data-is-add") === "true";
     button.classList.add(isAdd ? "NA" : "d-none");
     if(isAdd)
       button.addEventListener("click", (e) => 
@@ -117,8 +119,7 @@ export class Filter extends HTMLElement {
     button.addEventListener("click", async (e) => {
       e.preventDefault();
       button.setAttribute("data-is-loading", true);
-      await this.export(); // TODO: export event
-      button.setAttribute("data-is-loading", true);
+      document.dispatchEvent(new CustomEvent("exportEvent"));
     });
   }
 
@@ -138,9 +139,5 @@ export class Filter extends HTMLElement {
         detail: e.target
       })
     );
-  }
-
-  async export() {
-    uiService.showAlert("Information", "Not yet implemented.");
   }
 }

@@ -42,9 +42,11 @@ export class Users extends HTMLElement {
     // events
     this.handleFilter       = (e) => this.filterItems(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
+    this.handleExport       = (e) => this.exportItems();
     this.handleDeleteEvent  = async (e) => await this.deleteItem(e);
     document.addEventListener("searchEvent", this.handleFilter);
     document.addEventListener("selectedItemEvent", this.handleSelectedItem);
+    document.addEventListener("exportEvent", this.handleExport);
     document.addEventListener("deleteItemEvent", this.handleDeleteEvent);
   }
 
@@ -52,6 +54,7 @@ export class Users extends HTMLElement {
     // events
     document.removeEventListener("searchEvent", this.handleFilter);
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
+    document.removeEventListener("exportEvent", this.handleExport);
     document.removeEventListener("deleteItemEvent", this.handleDeleteEvent);
     // cache
     localStorage.setItem("filter.users", JSON.stringify(this.filter));
@@ -137,6 +140,30 @@ export class Users extends HTMLElement {
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);
+    }
+  }
+
+  async exportItems() {
+    try {
+      // setup
+      const now = new Date();
+      // call
+      const result = await crudService.exportItems(
+        '/api/account',
+        50,
+        'users',
+        `users ${now.toISOString().split("T")[0]} ${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`,
+        this.filter,
+        this.hiddenFields
+      );
+      if (result < 0)
+        this.uiService.showAlert("Information", "No items to export.");
+    } 
+    catch (err) {
+      uiService.showAlert("Error", err.message);
+    }
+    finally {
+      this.shadowRoot.querySelector("app-filter").setAttribute("data-export-done", "");
     }
   }
 
