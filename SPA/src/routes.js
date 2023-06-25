@@ -42,7 +42,7 @@ export const Routes = [
     {
         name: 'accounts.users.edit',
         path: '/users/:id/edit',
-        component: '<app-user-edit class="fade-in"></app-user-edit>'
+        component: '<app-user-edit class="fade-in" data-match=""></app-user-edit>'
     },
     {
         name: 'accounts.roles',
