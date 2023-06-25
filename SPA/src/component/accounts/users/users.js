@@ -63,13 +63,16 @@ export class Users extends HTMLElement {
 
   async loadFilter() {
     let filter = await JSON.parse(localStorage.getItem("filter.users") || "{}");
-    if(!filter.page) {
-      const now     = new Date();
-      const nowDate = now.toISOString().split("T")[0];
+    if(!filter.pageNumber) {
+      const now          = new Date();
+      const nowDate      = now.toISOString().split("T")[0];
+      const lastWeek     = new Date();
+      lastWeek.setDate(now.getDate()-7);
+      const lastWeekDate = lastWeek.toISOString().split("T")[0];
       filter = { 
         pageNumber: 1, 
         pageSize: 20,
-        createdStart: `${nowDate} ${now.getHours()-1}:${now.getMinutes()}`, 
+        createdStart: `${lastWeekDate} ${now.getHours()}:${now.getMinutes()}`, 
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
       };
     } 
@@ -81,7 +84,7 @@ export class Users extends HTMLElement {
   loadFilterUI(filter) {
     const UIFilter = {
       search: filter.username || '',
-      select: filter.role || 'Role',
+      select: filter.roleId || 0,
       dateBegin: filter.createdStart,
       dateEnd: filter.createdEnd
     };
@@ -122,9 +125,9 @@ export class Users extends HTMLElement {
 
   async filterDropdown(e) {
     if(e.detail.code == 0)
-      delete this.filter.role;
+      delete this.filter.roleId;
     else
-      this.filter.role = e.detail.code;
+      this.filter.roleId = e.detail.code;
     await this.displayItems();
   }
 
@@ -157,7 +160,7 @@ export class Users extends HTMLElement {
         this.hiddenFields
       );
       if (result < 0)
-        this.uiService.showAlert("Information", "No items to export.");
+        uiService.showAlert("Information", "No items to export.");
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);

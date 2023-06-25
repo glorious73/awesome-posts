@@ -57,14 +57,16 @@ export class Roles extends HTMLElement {
 
   async loadFilter() {
     let filter = await JSON.parse(localStorage.getItem("filter.roles") || "{}");
-    if (!filter.page) {
+    if (!filter.pageNumber) {
       const now = new Date();
       const nowDate = now.toISOString().split("T")[0];
+      const lastWeek     = new Date();
+      lastWeek.setDate(now.getDate()-7);
+      const lastWeekDate = lastWeek.toISOString().split("T")[0];
       filter = {
-        page: 1,
-        perPage: 20,
-        sort: "-created",
-        createdStart: `${nowDate} ${now.getHours() - 1}:${now.getMinutes()}`,
+        pageNumber: 1,
+        pageSize: 20,
+        createdStart: `${lastWeekDate} ${now.getHours()}:${now.getMinutes()}`,
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}`
       };
     }
@@ -121,7 +123,7 @@ export class Roles extends HTMLElement {
         this.hiddenFields
       );
       if (result < 0)
-        this.uiService.showAlert("Information", "No items to export.");
+        uiService.showAlert("Information", "No items to export.");
     }
     catch (err) {
       uiService.showAlert("Error", err.message);
