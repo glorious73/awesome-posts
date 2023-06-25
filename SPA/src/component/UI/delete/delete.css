@@ -1,0 +1,13 @@
+h1 {
+    margin-bottom: 3rem;
+}
+.form-delete {
+    padding: 1.5rem;
+}
+
+
+@media screen and (max-width: 576px) {
+    .form-delete {
+        padding: 1rem;
+    }
+}

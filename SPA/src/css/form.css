@@ -13,9 +13,6 @@
 .form-inline {
     display: inline !important;
 }
-.form-delete {
-    padding: 3rem;
-}
 
 .form-title-wrapper {
     display: flex;
@@ -176,9 +173,6 @@
     }
     .form-flex {
         padding: 2rem;
-    }
-    .form-delete {
-        padding: 1rem;
     }
     .form-row-two-fields {
         gap: 1rem 0;

@@ -27,6 +27,7 @@ import { DatePicker } from "./component/UI/datepicker/datepicker";
 import { Filter } from "./component/UI/filter/filter";
 import { Table } from "./component/UI/table/table";
 import { Pagination } from "./component/UI/pagination/pagination";
+import { Delete } from "./component/UI/delete/Delete";
 
 export class Components {
     constructor() { }
@@ -61,5 +62,6 @@ export class Components {
         customElements.define('app-filter', Filter);
         customElements.define('app-table', Table);
         customElements.define('app-pagination', Pagination);
+        customElements.define('app-delete', Delete);
     }
 }

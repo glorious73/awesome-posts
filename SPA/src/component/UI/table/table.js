@@ -168,19 +168,15 @@ export class Table extends HTMLElement {
   }
 
   deleteItem(e) {
-    // TODO: reconsider design
-    const item = this.getAttribute("data-item-name");
     const id =
       e.target.id.split("-")[1] || e.target.parentElement.id.split("-")[1];
-    const deleteEndpoint = this.getAttribute("data-api-endpoint");
-    const responseMessage = this.getAttribute("data-response-message");
     const dataDeleteEvent = this.getAttribute("data-delete-event");
     document.dispatchEvent(
       new CustomEvent("showModalEvent", {
         detail: {
-          title: `Delete ${item}`,
-          body: `<app-delete-form data-item-name="${item}" data-item-id="${id}" data-api-endpoint="${deleteEndpoint}" data-response-result="${responseMessage}" data-is-modal-close="true" data-delete-event="${dataDeleteEvent}">
-                </app-delete-form>`,
+          title: `Delete ${this.itemName}`,
+          body: `<app-delete data-item-name="${this.itemName}" data-item-id="${id}" data-delete-event="${dataDeleteEvent}">
+                </app-delete>`,
           caption: "",
         },
       })
