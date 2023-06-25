@@ -96,8 +96,8 @@ export class Settings extends HTMLElement {
     async connectedCallback() {
         const sroot = this.shadowRoot;
         // Cache
-        sroot.querySelector("#btnFilter").addEventListener("click", () => this.invalidateCache("filter"));
-        sroot.querySelector("#btnList").addEventListener("click", () => this.invalidateCache("list"));
+        sroot.querySelector("#btnFilter").addEventListener("click", (e) => this.invalidateCache("filter", e));
+        sroot.querySelector("#btnList").addEventListener("click", (e) => this.invalidateCache("list", e));
         // Profile
         const user = JSON.parse(localStorage.getItem("user"));
         sroot.querySelectorAll(".profileItem").forEach(item => item.innerHTML = user[item.id]);
@@ -126,14 +126,17 @@ export class Settings extends HTMLElement {
         return dataSource;
     }
 
-    invalidateCache(type) {
+    async invalidateCache(type, e) {
+        const button = e.target;
+        button.setAttribute("data-is-loading", true);
         let numKeys = 0;
         for(var key in localStorage) {
             if(key.startsWith(type)) {
-                localStorage.removeItem(key);
+                await localStorage.removeItem(key);
                 numKeys++;
             }
         }
+        button.setAttribute("data-is-loading", false);
         uiService.showAlert("Information", `${type}s cache cleared successfully (${numKeys}).`);
     }
 }
