@@ -11,7 +11,7 @@ function renderTemplate() {
             <h1 class="title">Users</h1>
             <app-filter data-search-id="username" data-search-placeholder="Username" data-is-dropdown="true" data-is-add="true" data-add-path="/users/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
-            <app-table class="m-table" data-theme="secondary" data-item-name="userItem" data-actions="edit" data-actions-path="users"></app-table>
+            <app-table class="m-table" data-theme="secondary" data-item-name="user" data-actions="edit,delete" data-actions-path="users" data-delete-event="deleteItemEvent"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
             </app-pagination>
         </div>
@@ -42,17 +42,17 @@ export class Users extends HTMLElement {
     // events
     this.handleFilter       = (e) => this.filterItems(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
-    this.handleDeleteEvent  = async (e) => await this.displayItems();
+    this.handleDeleteEvent  = async (e) => await this.deleteItem(e);
     document.addEventListener("searchEvent", this.handleFilter);
     document.addEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.addEventListener("deletedEvent", this.handleDeleteEvent);
+    document.addEventListener("deleteItemEvent", this.handleDeleteEvent);
   }
 
   disconnectedCallback() {
     // events
     document.removeEventListener("searchEvent", this.handleFilter);
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.removeEventListener("deletedEvent", this.handleDeleteEvent);
+    document.removeEventListener("deleteItemEvent", this.handleDeleteEvent);
     // cache
     localStorage.setItem("filter.users", JSON.stringify(this.filter));
     localStorage.setItem("list.roles", JSON.stringify(this.roles));
@@ -137,6 +137,24 @@ export class Users extends HTMLElement {
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);
+    }
+  }
+
+  async deleteItem(e) {
+    let isDeleted = false;
+    try {
+      const result = await crudService.deleteItem("/api/account", e.detail.itemId);
+      isDeleted = true;
+      uiService.showAlert("Success", "User record deleted successfully.");
+    }
+    catch(err) {
+      uiService.showAlert("Error", err.message);
+      isDeleted = false;
+    }
+    finally {
+      document.dispatchEvent(new CustomEvent(`postdeleteItemEvent`, { detail: { isDeleted: isDeleted }}));
+      if(isDeleted)
+        await this.displayItems();
     }
   }
 }
