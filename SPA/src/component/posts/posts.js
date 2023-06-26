@@ -94,10 +94,10 @@ export class Posts extends HTMLElement {
         await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
       else {
         dropdownItems = [{code: "Location", name: "Location"}];
-        await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
-        // const { locations } = await crudService.getItems("/api/post/locations", null);
-        // for(const location of locations)
-        //   dropdownItems.push({code: location.code, name: location.name});
+        const { locations } = await crudService.getItems("/api/post/locations", null);
+        console.log(`locations = ${locations}`);
+        for(const location of locations)
+          dropdownItems.push({code: location, name: location});
       }
       document.dispatchEvent(
         new CustomEvent("filterDropdownEvent", {
@@ -121,7 +121,7 @@ export class Posts extends HTMLElement {
   }
 
   async filterDropdown(e) {
-    if(e.detail.code == 0)
+    if(e.detail.code == "Location")
       delete this.filter.location;
     else
       this.filter.location = e.detail.code;
