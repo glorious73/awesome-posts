@@ -5,6 +5,7 @@ import { ForgotPassword } from "./component/auth/forgotpassword";
 import { ResetPassword } from "./component/auth/resetpassword";
 import { Dashboard } from "./component/dashboard/dashboard";
 import { Posts } from "./component/posts/posts";
+import { PostForm } from "./component/posts/postform";
 import { About } from "./component/about/about";
 import { Accounts } from "./component/accounts/accounts";
 import { Users } from "./component/accounts/users/users";
@@ -40,6 +41,7 @@ export class Components {
         customElements.define('app-reset-password', ResetPassword);
         customElements.define('app-dashboard', Dashboard);
         customElements.define('app-posts', Posts);
+        customElements.define('app-post-form', PostForm);
         customElements.define('app-about', About);
         customElements.define('app-accounts', Accounts);
         customElements.define('app-users', Users);

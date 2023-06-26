@@ -25,6 +25,11 @@ export const Routes = [
         component: '<app-posts class="fade-in"></app-posts>'
     },
     {
+        name: 'posts.new',
+        path: '/posts/new',
+        component: '<app-post-form class="fade-in"></app-post-form>'
+    },
+    {
         name: 'about',
         path: '/about',
         component: '<app-about class="fade-in"></app-about>'
