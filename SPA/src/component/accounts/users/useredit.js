@@ -106,7 +106,7 @@ export class UserEdit extends HTMLElement {
 
   async loadUser() {
     try {
-        let user = JSON.parse(localStorage.getItem("userItem"));
+        let user = JSON.parse(localStorage.getItem("account"));
         if(!user || (user.id != this.id))
             user = (await crudService.getItemById("/api/account",this.id)).user;
         for (const [key, value] of Object.entries(user))
