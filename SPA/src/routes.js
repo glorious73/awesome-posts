@@ -30,6 +30,11 @@ export const Routes = [
         component: '<app-post-form class="fade-in"></app-post-form>'
     },
     {
+        name: 'posts.edit',
+        path: '/posts/:id/edit',
+        component: '<app-post-form class="fade-in" data-match=""></app-post-form>'
+    },
+    {
         name: 'about',
         path: '/about',
         component: '<app-about class="fade-in"></app-about>'

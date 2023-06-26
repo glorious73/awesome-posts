@@ -17,7 +17,7 @@ function renderTemplate() {
                         ${Globals.icons.querySelector(`#arrow-left-circle`).innerHTML}
                     </svg>
                   </a>
-                  <h1 class="form-title">ADD POST</h1>
+                  <h1 class="form-title" id="formTitle">ADD POST</h1>
               </div>
               <form action="" id="postForm"></form>
               <div class="mt-1">
@@ -27,7 +27,7 @@ function renderTemplate() {
                   </h2>
                   <div class="form-flex-row">
                       <label for="title">Title</label>
-                      <input type="text" class="input-text-form-flex" id="title" name="title" form="postForm" required>
+                      <input type="text" class="input-text-form-flex" id="Title" name="title" form="postForm" required>
                   </div>
                   <div class="form-flex-row">
                       <label for="description">Description</label>
@@ -41,7 +41,7 @@ function renderTemplate() {
                       <label></label>
                       <button type="submit" form="postForm" style="display:none;">submit</button>
                       <app-button data-classes="btn btn-secondary btn-form-flex" id="btnSubmit">
-                        <span slot="text">Add</span>
+                        <span slot="text" id="txtSubmit">Add</span>
                       </app-button>
                   </div>
               </div>
@@ -70,6 +70,11 @@ export class PostForm extends HTMLElement {
 
     async connectedCallback() {
         const sroot = this.shadowRoot;
+        // edit switch
+        this.isEdit = false;
+        const match = JSON.parse(this.getAttribute("data-match"));
+        if(match)
+            this.loadEditForm(match);
         sroot.querySelector("#btnBack").addEventListener("click", (e) => document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "posts" } })));
         sroot.querySelector("#userId").value = JSON.parse(localStorage.getItem("user")).id;
         const form = sroot.querySelector("#postForm");
@@ -86,12 +91,40 @@ export class PostForm extends HTMLElement {
 
     }
 
+    async loadEditForm(match) {
+        // UI
+        uiService.dataBindElements(this, "input&--&value,textarea&--&value");
+        this.shadowRoot.querySelector("#formTitle").innerHTML = "EDIT POST";
+        this.shadowRoot.querySelector("#txtSubmit").innerHTML = "Edit";
+        // Post
+        this.id = match.data.id;
+        this.isEdit = true;
+        const post = await this.loadPost();
+    }
+
+    async loadPost() {
+        try {
+            let post = JSON.parse(localStorage.getItem("post"));
+            if(!post || (post.id != this.id))
+                post = (await crudService.getItemById("/api/post",this.id)).post;
+            post.Title = post.title; // "title" is an HTML attribute. Way around it.
+            for (const [key, value] of Object.entries(post)) 
+                if (this[key] && this[key].change) this[key].change(value);
+            return post;
+        } 
+        catch (err) {
+            uiService.showAlert("Error", err.message);
+        }
+      }
+
     async submitForm(form) {
         const btnSubmit = this.shadowRoot.querySelector("#btnSubmit");
         try {
             btnSubmit.setAttribute("data-is-loading", true);
-            const { post } = await crudService.addItem("/api/post", form);
-            uiService.showAlert("Success", `${post.title} was created successfully.`);
+            const { post } = (this.isEdit) 
+                ? await crudService.editItem("/api/post", this.id, form) 
+                : await crudService.addItem("/api/post", form);
+            uiService.showAlert("Success", `${post.title} was ${(this.isEdit) ? 'edited' : 'created'} successfully.`);
             document.dispatchEvent(new CustomEvent("NavigateEvent", { detail: { type: "name", name: "posts" } }));
         }
         catch (err) {
