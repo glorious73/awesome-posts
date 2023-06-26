@@ -7,14 +7,14 @@ function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
-        <div class="container">
-            <h1 class="title">Posts</h1>
-            <app-filter data-search-id="title" data-search-placeholder="Title" data-is-dropdown="true" data-is-add="true" data-add-path="/posts/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
-            </app-filter>
-            <app-table class="m-table" data-theme="secondary"></app-table>
-            <app-pagination data-theme="secondary" data-search-event="searchEvent">
-            </app-pagination>
-        </div>
+      <div class="container">
+        <h1 class="title">Posts</h1>
+        <app-filter data-search-id="title" data-search-placeholder="Title" data-is-dropdown="true" data-is-add="true" data-add-path="/posts/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
+        </app-filter>
+        <app-table class="m-table" data-theme="secondary" data-item-name="post" data-actions="edit,delete" data-actions-path="posts" data-delete-event="deleteItemEvent"></app-table>
+        <app-pagination data-theme="secondary" data-search-event="searchEvent">
+        </app-pagination>
+      </div>
     `;
   return template;
 }
@@ -33,53 +33,54 @@ export class Posts extends HTMLElement {
   }
 
   async connectedCallback() {
-    this.hiddenFields = "id";
+    this.hiddenFields = "id,userId";
     // dropdown
-    this.postTypes = await this.loadDropdown();
+    this.locations = await this.loadDropdown();
     // component
     this.filter = await this.loadFilter();
     await this.displayItems();
     // events
     this.handleFilter       = (e) => this.filterItems(e);
     this.handleSelectedItem = (e) => this.filterDropdown(e);
-    this.handleDeleteEvent  = async (e) => await this.displayItems();
+    this.handleExport       = (e) => this.exportItems();
+    this.handleDeleteEvent  = async (e) => await this.deleteItem(e);
     document.addEventListener("searchEvent", this.handleFilter);
     document.addEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.addEventListener("deletedEvent", this.handleDeleteEvent);
+    document.addEventListener("exportEvent", this.handleExport);
+    document.addEventListener("deleteItemEvent", this.handleDeleteEvent);
   }
 
   disconnectedCallback() {
     // events
     document.removeEventListener("searchEvent", this.handleFilter);
     document.removeEventListener("selectedItemEvent", this.handleSelectedItem);
-    document.removeEventListener("deletedEvent", this.handleDeleteEvent);
+    document.removeEventListener("exportEvent", this.handleExport);
+    document.removeEventListener("deleteItemEvent", this.handleDeleteEvent);
     // cache
     localStorage.setItem("filter.posts", JSON.stringify(this.filter));
-    localStorage.setItem("list.post_types", JSON.stringify(this.postTypes));
+    localStorage.setItem("list.locations", JSON.stringify(this.locations));
   }
 
   async loadFilter() {
     let filter = await JSON.parse(localStorage.getItem("filter.posts") || "{}");
-    if(!filter.page) {
+    if(!filter.pageNumber) {
       const now     = new Date();
       const nowDate = now.toISOString().split("T")[0];
       filter = { 
-        page: 1, 
-        perPage: 20,
-        sort: "-created",
+        pageNumber: 1, 
+        pageSize: 20,
         createdStart: `${nowDate} ${now.getHours()-1}:${now.getMinutes()}`, 
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
       };
-    } 
-    else
-      this.loadFilterUI(filter);
+    }
+    this.loadFilterUI(filter);
     return filter;
   }
 
   loadFilterUI(filter) {
     const UIFilter = {
       search: filter.title || '',
-      select: filter.type || 'type',
+      select: filter.location || "Location",
       dateBegin: filter.createdStart,
       dateEnd: filter.createdEnd
     };
@@ -88,12 +89,15 @@ export class Posts extends HTMLElement {
 
   async loadDropdown() {
     try {
-      let dropdownItems = JSON.parse(localStorage.getItem("list.post_types"));
+      let dropdownItems = JSON.parse(localStorage.getItem("list.locations"));
       if(dropdownItems && dropdownItems[0] && dropdownItems[0].name)
         await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
       else {
-        dropdownItems = [{code: "type", name: "Type"}, {code: "admin", name: "Admin"}, {code: "user", name: "User"}];
-        // then call API to fetch list
+        dropdownItems = [{code: "Location", name: "Location"}];
+        await new Promise(resolve => setTimeout(resolve, 500)); // stall to load select
+        // const { locations } = await crudService.getItems("/api/post/locations", null);
+        // for(const location of locations)
+        //   dropdownItems.push({code: location.code, name: location.name});
       }
       document.dispatchEvent(
         new CustomEvent("filterDropdownEvent", {
@@ -103,7 +107,7 @@ export class Posts extends HTMLElement {
       return dropdownItems;
     }
     catch(err) {
-      uiService.showAlert("Error", err.message);
+      uiService.showAlert("Error", err || err.message);
     }
   }
 
@@ -118,9 +122,9 @@ export class Posts extends HTMLElement {
 
   async filterDropdown(e) {
     if(e.detail.code == 0)
-      delete this.filter.type;
+      delete this.filter.location;
     else
-      this.filter.type = e.detail.code;
+      this.filter.location = e.detail.code;
     await this.displayItems();
   }
 
@@ -129,13 +133,54 @@ export class Posts extends HTMLElement {
       const table      = this.shadowRoot.querySelector("app-table");
       const pagination = this.shadowRoot.querySelector("app-pagination");
       table.setAttribute("data-is-loading", true);
-      const result = await crudService.getItems("/api/collections/posts/records", this.filter);
+      const result = await crudService.getItems("/api/post", this.filter);
       table.setAttribute("data-is-loading", false);
-      table.setAttribute("data-items", JSON.stringify({items: result.items, hiddenFields: this.hiddenFields}));
+      table.setAttribute("data-items", JSON.stringify({items: result.posts, hiddenFields: this.hiddenFields}));
       pagination.setAttribute("data-pagination", JSON.stringify(result));
     } 
     catch (err) {
       uiService.showAlert("Error", err.message);
+    }
+  }
+  async exportItems() {
+    try {
+      // setup
+      const now = new Date();
+      // call
+      const result = await crudService.exportItems(
+        '/api/post',
+        50,
+        'posts',
+        `posts ${now.toISOString().split("T")[0]} ${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`,
+        this.filter,
+        this.hiddenFields
+      );
+      if (result < 0)
+        uiService.showAlert("Information", "No items to export.");
+    } 
+    catch (err) {
+      uiService.showAlert("Error", err.message);
+    }
+    finally {
+      this.shadowRoot.querySelector("app-filter").setAttribute("data-export-done", "");
+    }
+  }
+
+  async deleteItem(e) {
+    let isDeleted = false;
+    try {
+      const result = await crudService.deleteItem("/api/post", e.detail.itemId);
+      isDeleted = true;
+      uiService.showAlert("Success", "Post deleted successfully.");
+    }
+    catch(err) {
+      uiService.showAlert("Error", err.message);
+      isDeleted = false;
+    }
+    finally {
+      document.dispatchEvent(new CustomEvent(`postdeleteItemEvent`, { detail: { isDeleted: isDeleted }}));
+      if(isDeleted)
+        await this.displayItems();
     }
   }
 }
