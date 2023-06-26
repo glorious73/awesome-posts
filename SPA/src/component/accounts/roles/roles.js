@@ -70,8 +70,7 @@ export class Roles extends HTMLElement {
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}`
       };
     }
-    else
-      this.loadFilterUI(filter);
+    this.loadFilterUI(filter);
     return filter;
   }
 

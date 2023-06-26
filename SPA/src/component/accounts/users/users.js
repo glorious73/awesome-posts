@@ -11,7 +11,7 @@ function renderTemplate() {
             <h1 class="title">Users</h1>
             <app-filter data-search-id="username" data-search-placeholder="Username" data-is-dropdown="true" data-is-add="true" data-add-path="/users/new" data-is-dates="true" data-begin-id="createdStart" data-end-id="createdEnd">
             </app-filter>
-            <app-table class="m-table" data-theme="secondary" data-item-name="user" data-actions="edit,delete" data-actions-path="users" data-delete-event="deleteItemEvent"></app-table>
+            <app-table class="m-table" data-theme="secondary" data-item-name="account" data-actions="edit,delete" data-actions-path="users" data-delete-event="deleteItemEvent"></app-table>
             <app-pagination data-theme="secondary" data-search-event="searchEvent">
             </app-pagination>
         </div>
@@ -76,8 +76,7 @@ export class Users extends HTMLElement {
         createdEnd: `${nowDate} ${now.getHours()}:${now.getMinutes()}` 
       };
     } 
-    else
-      this.loadFilterUI(filter);
+    this.loadFilterUI(filter);
     return filter;
   }
 
