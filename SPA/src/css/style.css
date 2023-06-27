@@ -35,7 +35,7 @@ html {
 body {
   background-color: var(--accent-color);
   color: var(--text-color);
-  min-height: 99.9vh;
+  min-height: 99.91vh;
 }
 
 #main {
