@@ -4,9 +4,13 @@ function renderTemplate() {
   const template = document.createElement("template");
 
   template.innerHTML = /*html*/ `
-        <div class="container">
-            <h1 clas="title">About</h1>
-        </div> 
+    <div class="container">
+        <h1 class="title">About</h1>
+        <div class="card section">
+            <p>This is the "Awesome Posts" application. It is intended to be a template to create other applications.</p>
+            <p>The Web Components in the "UI" directory in it are to be reused for future projects. Also available for public use.</p>
+        </div>
+    </div>
     `;
   return template;
 }
