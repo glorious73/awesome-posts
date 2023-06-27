@@ -1,0 +1,33 @@
+Awesome Posts:
+ - Table, Filter, and Pagination		DONE
+ - App colors					DONE			
+ - Frontend auth and user toggle		DONE
+ - Date picker					DONE
+ - Font						DONE
+ - Button w/ loading				DONE
+ - Fade-in animation				DONE
+ - PocketBase backend w/ auth			DONE			
+ - Table loading				DONE
+ - Cache filters & lists			DONE
+ - Settings page				DONE
+ - Route conventions				DONE
+ - Not Found, Switch, File			DONE
+ - Forgot & Reset Password			DONE
+ - App-button w/ forms				DONE
+ - Users CRUD					DONE
+ - Export					DONE
+ - Filter by dates				DONE			
+ - .NET API keys				DONE
+ - Rename to API Gateway			DONE
+ - Create .NET Posts API			DONE
+ - Reset Git for APIs				DONE
+ - Query string/Body with user			DONE
+ - Location Select filter			DONE
+ - Posts CRUD					DONE
+ - Plotly Proof Of Concept			DONE
+ - "Refresh" in filter				DONE
+ - form reportValidity()			DONE 
+ - Posts dashboard				DONE
+   - Total posts, users, and locations		DONE
+   - Posts per hour 	- line			DONE_STATIC
+   - Posts per location - donut 		DONE
