@@ -6,7 +6,7 @@ function renderTemplate() {
     template.innerHTML = /*html*/`
         <div class="sidebar-scroll">
             <section class="sidebar-header">
-                <img src="/img/vite.svg" class="sidebar-img"/>
+                <img src="/img/vite.svg" class="sidebar-img" alt="logo"/>
                 <a class="sidebar-header-icon">
                     <svg class="icon-sidebar-header" viewBox="-0.5 -0.5 16.9 16.9">
                     ${Globals.icons.querySelector(`#caret-left`).innerHTML}

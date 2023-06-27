@@ -48,7 +48,6 @@
 }
 .dashboard-chart-line {
   flex: 0 1 64%;
-  max-width: 60vw;  
 }
 
 .dashboard-chart-pie {
@@ -121,18 +120,14 @@
 
 @media screen and (max-width: 1024px) {
   .dashboard-charts {
-    flex-wrap: wrap;
+    flex-wrap: wrap !important;
     gap: 2rem 0;
     justify-content: center;
     align-items: center;
     width: 100% !important;
   }
-  .dashboard-chart-line {
-    flex: 0 1 83%;      
-  }
-  
-  .dashboard-chart-pie {
-    flex: 0 1 83%;
+  .dashboard-chart {
+    flex: 0 1 90%;      
   }
 }
 
