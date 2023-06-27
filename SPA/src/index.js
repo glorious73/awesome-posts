@@ -4,6 +4,7 @@ import './styles';
 import '@fontsource/oxygen';
 
 async function loadApp(isLoggedIn) {
+  // API_URL could be = location.href.endsWith("/") ? location.href.slice(0,-1) : location.href;
   window.Globals = { API_URL: 'http://localhost:5101', icons: ''};
   new Components().loadComponents();
   await loadIcons();
