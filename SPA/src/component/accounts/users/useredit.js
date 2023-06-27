@@ -96,7 +96,8 @@ export class UserEdit extends HTMLElement {
       await this.submitForm(e.target);
     });
     sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => { 
-      await this.submitForm(form);
+      if(form.reportValidity())
+        await this.submitForm(form);
     });
   }
 
@@ -120,6 +121,7 @@ export class UserEdit extends HTMLElement {
   }
 
   async submitForm(form) {
+    form.reportValidity();
     const btnSubmit = this.shadowRoot.querySelector("#btnSubmit");
     try {
         btnSubmit.setAttribute("data-is-loading", true);

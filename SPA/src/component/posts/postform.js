@@ -83,7 +83,8 @@ export class PostForm extends HTMLElement {
             await this.submitForm(e.target);
         });
         sroot.querySelector("#btnSubmit").addEventListener("click", async (e) => {
-            await this.submitForm(form);
+            if(form.reportValidity())
+                await this.submitForm(form);
         });
     }
 
