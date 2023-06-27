@@ -16,10 +16,20 @@ function renderTemplate() {
             </div>
             <div class="dashboard-charts">
               <div class="card dashboard-chart dashboard-chart-line" id="postsperhour">
-              
+                <span class="spinner chart-spinner">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
               </div>
               <div class="card dashboard-chart dashboard-chart-pie" id="locations">
-              
+                <span class="spinner chart-spinner">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
               </div>
             </div>
         </div> 
@@ -42,7 +52,8 @@ export class Dashboard extends HTMLElement {
     shadow.adoptedStyleSheets = [stylesheet, plotssheet];
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    await new Promise(resolve => setTimeout(resolve, 600));
     this.loadPostsPerHour();
     this.loadLocations();
   }
@@ -52,6 +63,8 @@ export class Dashboard extends HTMLElement {
   }
 
   loadPostsPerHour() {
+    const postsPerHour = this.shadowRoot.querySelector("#postsperhour");
+    postsPerHour.innerHTML = '';
     const trace1 = {
       x:['2020-10-04', '2021-11-04', '2023-12-04'],
       y: [90, 80, 60],
@@ -64,10 +77,12 @@ export class Dashboard extends HTMLElement {
         showlegend: false
     };
     const config = { responsive: false };
-    Plotly.newPlot(this.shadowRoot.querySelector("#postsperhour"), data, layout, config);
+    Plotly.newPlot(postsPerHour, data, layout, config);
   }
 
   loadLocations() {
+    const locations = this.shadowRoot.querySelector("#locations");
+    locations.innerHTML = '';
     const data = [{
       values: [19, 26, 55],
       labels: ['Residential', 'Non-Residential', 'Utility'],
@@ -76,6 +91,6 @@ export class Dashboard extends HTMLElement {
     }];
     const layout = { title: 'Plotly Donut Chart', font: { size: 18 }, legend: { x: 1, y: 1 } };
     const config = { responsive: false };
-    Plotly.newPlot(this.shadowRoot.querySelector("#locations"), data, layout, config);
+    Plotly.newPlot(locations, data, layout, config);
   }
 }
