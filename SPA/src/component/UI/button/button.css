@@ -19,9 +19,8 @@
     color: var(--secondary-color);
 }
 .btn-primary:hover {
-    cursor: pointer;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
+    background-color: var(--active-color);
+    border: 1px solid var(--active-color);
     color: var(--primary-color);
 }
 .btn-primary:hover svg {
@@ -33,7 +32,6 @@
     color: var(--primary-color);
 }
 .btn-secondary:hover, .active {
-    cursor: pointer;
     background-color: var(--active-color);
     border: 1px solid var(--active-color);
     color: var(--primary-color);
@@ -55,6 +53,19 @@
     background-color: var(--error-color);
     border: 1px solid var(--error-color);
     color: var(--primary-color);
+}
+.btn-transparent {
+    width: 3rem !important;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    color: var(--secondary-color);
+}
+.btn-transparent:hover {
+    color: var(--active-color);
+}
+.btn-transparent:hover svg {
+    fill: var(--active-color);
 }
 
 .btn-filter {

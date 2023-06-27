@@ -12,6 +12,13 @@ function renderTemplate() {
                 <app-select id="dropdown" data-theme="secondary" data-option="name" data-value="code" data-items-event="filterDropdownEvent" data-item-selected-event="selectedItemEvent">
                 </app-select>
                 <app-date-picker style="display:none;"></app-date-picker>
+                <app-button data-classes="btn btn-transparent" title="refresh" id="refresh">
+                  <span slot="text">
+                    <svg class="icon-filter icon-filter-fill" viewBox="-0.5 -0.5 16.9 16.9">
+                        ${Globals.icons.querySelector(`#arrow-counterclockwise`).innerHTML}
+                    </svg>
+                  </span>
+                </app-button>
             </div>
             <div class="filter-item filter-actions">
                 <app-button data-classes="btn btn-primary btn-filter" id="export">
@@ -59,6 +66,7 @@ export class Filter extends HTMLElement {
     this.loadDropdown(sroot.querySelector("#dropdown"));
     this.loadAdd(sroot.querySelector("#add"));
     this.loadExport(sroot.querySelector("#export"));
+    this.loadRefresh(sroot.querySelector("#refresh"));
     this.loadDates(sroot.querySelector("app-date-picker"));
   }
 
@@ -105,6 +113,10 @@ export class Filter extends HTMLElement {
       dates.setAttribute("data-begin-id", this.getAttribute("data-begin-id") || "dateBegin");
       dates.setAttribute("data-end-id", this.getAttribute("data-end-id") || "dateEnd");
     }
+  }
+
+  loadRefresh(button) {
+    button.addEventListener("click", (e) => this.filter(e));
   }
 
   loadAdd(button) {

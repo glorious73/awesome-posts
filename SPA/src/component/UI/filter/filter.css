@@ -64,6 +64,9 @@
         padding-top: 1rem;
         gap: 1rem 1.5rem;   
     }
+    .filter-actions #refresh {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -79,6 +82,9 @@
     .filter-actions app-button {
         flex: 0 1 0%;
         text-align: center;
+    }
+    .filter-actions #refresh {
+        display: none;
     }
 }
 
