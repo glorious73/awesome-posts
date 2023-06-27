@@ -8,8 +8,90 @@
     margin-bottom: 2rem;
 }
 
-.graph {
-  width: 30rem;
-  height: 25rem;
-  border: 1px red solid;
+.dashboard-cards, .dashboard-charts {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-card {
+  flex: 0 1 30%; 
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  place-content: center center;
+  place-items: center center;   
+}
+.dashboard-card h1 {
+  display: flex;
+  place-content: center center;
+}
+.dashboard-card h1, .dashboard-card label {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-charts {
+  flex-wrap: nowrap !important;
+}
+.dashboard-chart {
+  height: 30rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-content: center center;
+  place-items: center center;
+}
+.dashboard-chart-line {
+  flex: 0 1 64%;
+  max-width: 60vw;  
+}
+
+.dashboard-chart-pie {
+  flex: 0 1 29%;
+}
+
+
+.card {
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1.5px solid var(--accent-color);
+  border-radius: 0.8rem;
+}
+.card:hover {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+@media screen and (max-width: 1024px) {
+  .dashboard-charts {
+    flex-wrap: wrap;
+    gap: 2rem 0;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+  }
+  .dashboard-chart-line {
+    flex: 0 1 83%;      
+  }
+  
+  .dashboard-chart-pie {
+    flex: 0 1 83%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-cards {
+      gap: 2rem 0;
+      justify-content: center;
+      align-items: center;
+      width: 100% !important;
+  }
+  .dashboard-card {
+      flex: 0 1 88%;    
+  }
 }
